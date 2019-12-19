@@ -1,0 +1,49 @@
+form{
+  margin-top: 1rem;
+  background-color: teal;
+  width: 100%;
+}
+
+input, textarea{
+  padding: .5rem;
+  width: 100%;
+  display: block;
+}
+
+body{
+  min-height: 100vh;
+  padding: 1rem;
+  background-color: aquamarine;
+}
+
+.posts{
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.post{
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.post > div{
+  display: flex;
+  margin-top: 1rem;
+}
+
+.post > div > p{
+  margin-right: .5rem;
+}
+
+.hidden{
+  display: none;
+}
+
+@media only screen and (min-width: 720px){
+  body{
+    width: 720px;
+    margin: auto;
+  }
+}
