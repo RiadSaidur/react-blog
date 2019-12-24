@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import './stylesheets/Comments.css'
 
 function Comments({ match }){
@@ -9,29 +11,34 @@ function Comments({ match }){
     comments: [
       {
         key: 0,
-        id: 'chiki54',
+        user: 'chiki54',
         msg: 'so familiar',
         date: '12:17 AM 21/12/2019'
       },
       {
         key: 1,
-        id: 'chiki54',
+        user: 'chiki54',
         msg: 'and overwhelmingly pure',
         date: '12:17 AM 21/12/2019'
       },
       {
         key: 2,
-        id: 'chiki54',
+        user: 'chiki54',
         msg: 'this from that I hold now',
         date: '12:17 AM 21/12/2019'
       },
       {
         key: 3,
-        id: 'chiki54',
+        user: 'chiki54',
         msg: 'wide eyes and hopefully wild',
         date: '12:17 AM 21/12/2019'
       }
     ]
+  }
+  const commentHandler = event => {
+    event.preventDefault();
+    event.persist();
+    console.log(event);
   }
   return(
     <div>
@@ -40,8 +47,8 @@ function Comments({ match }){
         <p>{temp.msg}</p>
       </div>
       <div>
-        <form>
-          <textarea name="" id="" cols="30" rows="10"></textarea>
+        <form onSubmit={commentHandler}>
+          <textarea cols="30" rows="10"></textarea>
           <input type="submit" value='comment'/>
         </form>
       </div>
@@ -49,7 +56,9 @@ function Comments({ match }){
         {
           temp.comments.map(comment => (
             <div className="comment post" key={comment.key}>
-              <h4>{comment.id}</h4>
+              <Link to={`/${comment.user}`}>
+                <h4>{comment.user}</h4>
+              </Link>
               <p>{comment.msg}</p>
               <p>{comment.date}</p>
             </div>
