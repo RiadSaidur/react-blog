@@ -1,0 +1,8 @@
+.about-container, .description, .stack, .license, .license > p{
+  margin-top: 1rem;
+}
+
+.about-container a{
+  font-weight: bold;
+  color: rgba(2, 2, 175, 0.945);
+}
