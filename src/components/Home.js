@@ -7,12 +7,14 @@ function Signin(){
   const [posts, updatePosts] = useState([
     {
       key: 0,
+      author: 'AfricanBoi51',
       title: 'Title',
       msg: 'Msg',
       likes: 10
     },
     {
       key: 1,
+      author: 'DudeBoi',
       title: "Okay",
       msg: "Okay bro",
       likes: 5
@@ -29,7 +31,7 @@ function Signin(){
     }
     event.target.elements[0].value = '';
     event.target.elements[1].value = '';
-    updatePosts([...posts, post]);
+    if(post.title && post.msg)updatePosts([...posts, post]);
   };
   const upvote = key => {
     let updates = posts;
