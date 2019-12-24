@@ -16,6 +16,24 @@ body{
   background-color: aquamarine;
 }
 
+button{
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+li{
+  list-style: none;
+}
+
+button:focus{
+  outline: none;
+}
+
+a{
+  color: black;
+}
+
 .posts{
   margin-top: 1rem;
   width: 100%;
