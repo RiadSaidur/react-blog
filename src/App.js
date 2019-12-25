@@ -9,6 +9,7 @@ import Signin from './components/Signin';
 import Signup from './components/Signup';
 import About from './components/About';
 import User from './components/User';
+import Edit from './components/Edit';
 
 function App(){
   
@@ -21,6 +22,7 @@ function App(){
         <Route path='/signup' exact component={Signup} />
         <Route path='/about' exact component={About} />
         <Route path='/:user' exact component={User} />
+        <Route path='/edit/:type/:id' exact component={Edit} />
         <Route path='/comments/:id' exact component={Comments} />
       </Switch>
     </Router>
