@@ -61,6 +61,9 @@ function Comments({ match }){
               </Link>
               <p>{comment.msg}</p>
               <p>{comment.date}</p>
+              <Link to={`/edit/comment/${comment.key}`}>
+                <button>Edit</button>
+              </Link>
             </div>
           ))
         }
