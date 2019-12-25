@@ -27,6 +27,9 @@ function NewPost({ posts, upvote, downvote }){
                   >Downvote</button>
                 </div>
               </div>
+              <Link to={`edit/post/${post.key}`}>
+                <button>Edit</button>
+              </Link>
             </div>
         ))
       }
