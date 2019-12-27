@@ -17,6 +17,12 @@ function NewPost({ posts, upvote, downvote }){
                 <h3>{post.title}</h3>
                 <p>{post.msg}</p>
               </Link>
+              <div className="tags">
+                <h4>tags:</h4>
+                {post.tags.map(tag => (                  
+                  <Link to={`/p/${tag}`}>{tag}</Link>
+                ))}
+              </div>
               <div className="post-footer">
                 <p>{post.likes}</p>
                 <div className="post-footer-cta">

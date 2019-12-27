@@ -6,17 +6,19 @@ function User({ match }){
   const [posts, updatePosts] =  useState([
     {
       key: 0,
-      author: match.params.user,
+      author: 'AfricanBoi51',
       title: 'Title',
       msg: 'Msg',
-      likes: 10
+      likes: 10,
+      tags: ['react', 'dom', 'one']
     },
     {
       key: 1,
-      author: match.params.user,
+      author: 'DudeBoi',
       title: "Okay",
       msg: "Okay bro",
-      likes: 5
+      likes: 5,
+      tags: ['react', 'dom', 'two']
     }
   ]);
   const upvote = key => {
