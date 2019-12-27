@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import NewPost from './NewPost';
-import Posts from './Posts';
+import NewPost from '../components/NewPost';
+import Posts from '../components/Posts';
 
 function Signin(){
   const [posts, updatePosts] = useState([

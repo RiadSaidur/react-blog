@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import './stylesheets/Comments.css'
+import '../stylesheets/Comments.css'
 
 function Comments({ match }){
   const temp = {

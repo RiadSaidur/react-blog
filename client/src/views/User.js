@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
-import Posts from './Posts';
+import Posts from '../components/Posts';
 
-export default function TaggedPost({ match }) {
+function User({ match }){
   const [posts, updatePosts] =  useState([
     {
       key: 0,
@@ -31,10 +31,12 @@ export default function TaggedPost({ match }) {
     updates[key].likes--;
     updatePosts([...updates]);
   }
-  return (
-    <div className="tagged-container">
-      <h4>p/{ match.params.tag }</h4>
+  return(
+    <div className="user-container">
+      <h1>Posts by { match.params.user }</h1>
       <Posts posts={posts} upvote={upvote} downvote={downvote}/>
     </div>
   )
 }
+
+export default User;

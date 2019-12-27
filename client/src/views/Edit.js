@@ -1,7 +1,7 @@
 import React from 'react';
 
-import EditComment from "./EditComment";
-import EditPost from './EditPost';
+import EditComment from "../components/EditComment";
+import EditPost from '../components/EditPost';
 
 function Edit({ match }){
   const dlt = () => {

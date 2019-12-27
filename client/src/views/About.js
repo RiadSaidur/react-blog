@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './stylesheets/About.css'
+import '../stylesheets/About.css'
 
 function Signin(){
   return(

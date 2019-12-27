@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import './stylesheets/Posts.css'
+import '../stylesheets/Posts.css'
 
 function NewPost({ posts, upvote, downvote }){
   return(

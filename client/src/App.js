@@ -1,16 +1,16 @@
 import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
-import './App.css';
+import './stylesheets/App.css';
 
 import Header from './components/Header';
-import Home from './components/Home';
-import Comments from './components/Comments';
-import Signin from './components/Signin';
-import Signup from './components/Signup';
-import About from './components/About';
-import User from './components/User';
-import Edit from './components/Edit';
-import TaggedPost from './components/TaggedPost';
+import Home from './views/Home';
+import Comments from './views/Comments';
+import Signin from './views/Signin';
+import Signup from './views/Signup';
+import About from './views/About';
+import User from './views/User';
+import Edit from './views/Edit';
+import TaggedPost from './views/TaggedPost';
 
 function App(){
   
