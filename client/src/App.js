@@ -11,6 +11,7 @@ import About from './views/About';
 import User from './views/User';
 import Edit from './views/Edit';
 import TaggedPost from './views/TaggedPost';
+import NewPost from './views/NewPost';
 
 function App(){
   
@@ -23,6 +24,7 @@ function App(){
         <Route path='/signup' exact component={Signup} />
         <Route path='/about' exact component={About} />
         <Route path='/:user' exact component={User} />
+        <Route path='/p/newpost' exact component={NewPost} />
         <Route path='/p/:tag' exact component={TaggedPost} />
         <Route path='/edit/:type/:id' exact component={Edit} />
         <Route path='/comments/:id' exact component={Comments} />
