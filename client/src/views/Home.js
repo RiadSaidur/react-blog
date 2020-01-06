@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-import NewPost from '../components/NewPost';
 import Posts from '../components/Posts';
 
 function Signin(){
@@ -22,19 +22,6 @@ function Signin(){
       tags: ['react', 'dom', 'two']
     }
   ]);
-  const newPost = event => {
-    event.persist();
-    event.preventDefault();
-    const post = {
-      key: posts.length,
-      title: event.target.elements[0].value,
-      msg: event.target.elements[1].value,
-      likes: 0
-    }
-    event.target.elements[0].value = '';
-    event.target.elements[1].value = '';
-    if(post.title && post.msg)updatePosts([...posts, post]);
-  };
   const upvote = key => {
     let updates = posts;
     updates[key].likes++;
@@ -44,10 +31,10 @@ function Signin(){
     let updates = posts;
     updates[key].likes--;
     updatePosts([...updates]);
-  }
+  };
   return(
     <div className='container'>
-      <NewPost newPost={newPost} />
+      <Link to='/p/newpost'>New Post</Link>
       <Posts posts={posts} upvote={upvote} downvote={downvote}/>
     </div>
   )
