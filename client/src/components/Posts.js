@@ -18,9 +18,9 @@ function NewPost({ posts, upvote, downvote }){
                 <p>{post.msg}</p>
               </Link>
               <div className="tags">
-                <h4>tags:</h4>
+                <h4>tags:&nbsp;</h4>
                 {post.tags.map(tag => (                  
-                  <Link to={`/p/${tag}`}>{tag}</Link>
+                  <Link to={`/p/${tag}`}>{tag}&nbsp;</Link>
                 ))}
               </div>
               <div className="post-footer">
@@ -33,7 +33,7 @@ function NewPost({ posts, upvote, downvote }){
                   >Downvote</button>
                 </div>
               </div>
-              <Link to={`edit/post/${post.key}`}>
+              <Link to={`/edit/post/${post.key}`}>
                 <button>Edit</button>
               </Link>
             </div>
