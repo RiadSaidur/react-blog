@@ -156,6 +156,15 @@ app.delete('/editposttags/:id', async (req, res) => {
   }
 });
 
+app.delete('/deletepost/:id', async (req, res) => {
+  try {
+    await db.collection('posts').doc(req.params.id).delete();
+    return res.status(201).json({ message: "post successfully deleted"});
+  } catch (error) {
+    res.json({ error: 'something went wrong' });
+  }
+})
+
 exports.api = functions.region('asia-east2').https.onRequest(app);
 
 
