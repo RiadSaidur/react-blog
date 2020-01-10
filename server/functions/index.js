@@ -19,7 +19,7 @@ app.get('/posts', async (req, res) => {
     });
     return res.json(posts);
   } catch (error) {
-    res.json(error);
+    return res.json({ error: 'something went wrong' });
   }
 });
 
@@ -41,7 +41,7 @@ app.post('/posts', async (req, res) => {
       res.json(error)
     }
   } catch (error) {
-    res.json(error);
+    return res.json({ error: 'something went wrong' });
   }
 });
 
@@ -55,7 +55,7 @@ app.get('/comments/:id', async (req, res) => {
     });
     return res.json(comments);
   } catch (error) {
-    res.json(error);
+    return res.json({ error: 'something went wrong' });
   }
 });
 
@@ -67,17 +67,15 @@ app.post('/newcommment/:id', async (req, res) => {
     msg: req.body.msg,
     createdAt: new Date().toISOString()
   };
-  const docsRef = db.collection('comments').where('postId', '==', id);
   let comments = [];
   try {
-    // await db.collection('comments').doc(id).update({ cmnts: admin.firestore.FieldValue.arrayUnion(comment)});
-    const docs = await docsRef.get();
+    const docs = await db.collection('comments').where('postId', '==', id).get();
     docs.forEach( doc => {
       comments = (doc.data());
       id = (doc.id);
     });
   } catch (error) {
-    res.json({ error: "something went wrong" });
+    return res.json({ error: 'something went wrong' });
   }
 
   try {
@@ -112,7 +110,7 @@ app.patch('/editcomment/:id/:key', async (req, res) => {
       res.json(error);
     }
   } catch (error) {
-    res.json(error);
+    return res.json({ error: 'something went wrong' });
   }
 });
 
@@ -122,7 +120,7 @@ app.patch('/editpostbody/:id', async (req, res) => {
     await db.collection('posts').doc(id).update({ msg: req.body.msg });
     return res.status(201).json({ message: "post-body successfully edited"});
   } catch (error) {
-    res.json(error);
+    return res.json({ error: 'something went wrong' });
   }
 });
 
@@ -132,7 +130,7 @@ app.patch('/editposttitle/:id', async (req, res) => {
     await db.collection('posts').doc(id).update({ title: req.body.title });
     return res.status(201).json({ message: "post-title successfully edited"});
   } catch (error) {
-    res.json(error);
+    return res.json({ error: 'something went wrong' });
   }
 });
 
@@ -142,7 +140,7 @@ app.patch('/editposttags/:id', async (req, res) => {
     await db.collection('posts').doc(id).update({ tags: admin.firestore.FieldValue.arrayUnion(req.body.tag) });
     return res.status(201).json({ message: "post-tags successfully edited"});
   } catch (error) {
-    res.json(error);
+    return res.json({ error: 'something went wrong' });
   }
 });
 
@@ -152,7 +150,7 @@ app.delete('/editposttags/:id', async (req, res) => {
     await db.collection('posts').doc(id).update({ tags: admin.firestore.FieldValue.arrayRemove(req.body.tag) });
     return res.status(201).json({ message: "post-tags successfully deleted"});
   } catch (error) {
-    res.json(error);
+    return res.json({ error: 'something went wrong' });
   }
 });
 
@@ -161,9 +159,26 @@ app.delete('/deletepost/:id', async (req, res) => {
     await db.collection('posts').doc(req.params.id).delete();
     return res.status(201).json({ message: "post successfully deleted"});
   } catch (error) {
-    res.json({ error: 'something went wrong' });
+    return res.json({ error: 'something went wrong' });
   }
-})
+});
+
+app.get('/filter/:tag', async (req, res) => {
+  try {
+    const docs = await db.collection('posts').where('tags', 'array-contains', req.params.tag).get();
+    let posts = [];
+    docs.forEach(doc => {
+      const post = {
+        id: doc.id,
+        ...doc.data()
+      };
+      posts.push(post);
+    });
+    return res.json(posts);
+  } catch (error) {
+    return res.json({ error: 'something went wrong' });
+  }
+});
 
 exports.api = functions.region('asia-east2').https.onRequest(app);
 
