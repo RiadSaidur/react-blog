@@ -1,6 +1,14 @@
 const { db, admin } = require('../utils/admin');
 
+const {
+  validatePost,
+  validateComment
+} = require('../validators/postdata');
+
 const addNewPost = async (req, res) => {
+  const { error } = validatePost({ title: req.body.title, msg: req.body.msg });
+  if(error) return res.json(error);
+
   try {
     const post = {
       author: req.body.author,
@@ -23,7 +31,11 @@ const addNewPost = async (req, res) => {
 }
 
 const addNewComment = async (req, res) => {
+  const { error } =  validateComment({ msg: req.body.msg });
+  if(error) return res.json(error);
+
   let id = req.params.id;
+
   const comment = {
     key: Math.floor(Math.random()*10000),
     user: req.body.user,
@@ -57,7 +69,24 @@ const addNewComment = async (req, res) => {
   return res.status(201).json({ message: "comment successfully added"});
 }
 
+const updatePost = async (req, res) => {
+  const id = req.params.id;
+
+  const { error } = validatePost({ title: req.body.title, msg: req.body.msg });
+  if(error) return res.json(error);
+
+  try {
+    await db.collection('posts').doc(id).update({ msg: req.body.msg, title: req.body.title });
+    return res.status(201).json({ message: "post-body successfully edited"});
+  } catch (error) {
+    return res.json({ error: 'something went wrong' });
+  }
+}
+
 const updateComment = async (req, res) => {
+  const { error } =  validateComment({ msg: req.body.msg });
+  if(error) return res.json(error);
+  
   const key = parseInt(req.params.key);
   let comments = [];
   let id;
@@ -82,16 +111,6 @@ const updateComment = async (req, res) => {
     return res.status(201).json({ message: "comment successfully edited"});
   } catch (error) {
     return res.json({ error: 'something went wrong svaing the comment' });
-  }
-}
-
-const updatePost = async (req, res) => {
-  const id = req.params.id;
-  try {
-    await db.collection('posts').doc(id).update({ msg: req.body.msg, title: req.body.title });
-    return res.status(201).json({ message: "post-body successfully edited"});
-  } catch (error) {
-    return res.json({ error: 'something went wrong' });
   }
 }
 
