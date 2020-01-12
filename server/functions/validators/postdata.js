@@ -2,11 +2,13 @@ const validatePost = post => {
   if(
     post.title.trim() === '' ||
     post.msg.trim() === ''
-  ) return { error: 'title or body should not be emnpy'};
+  ) return false;
+  return true;
 }
 
 const validateComment = comment => {
-  if( comment.msg.trim() === '' ) return { error: 'body should not be emnpy'};
+  if( comment.msg.trim() === '' ) return false;
+  return true;
 }
 
 module.exports = {

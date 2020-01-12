@@ -6,8 +6,7 @@ const {
 } = require('../validators/postdata');
 
 const addNewPost = async (req, res) => {
-  const { error } = validatePost({ title: req.body.title, msg: req.body.msg });
-  if(error) return res.json(error);
+  if(!validatePost({title: req.body.title, msg: req.body.msg})) return res.json({ error: 'invalid form data'} );
 
   try {
     const post = {
@@ -31,8 +30,7 @@ const addNewPost = async (req, res) => {
 }
 
 const addNewComment = async (req, res) => {
-  const { error } =  validateComment({ msg: req.body.msg });
-  if(error) return res.json(error);
+  if(!validateComment({ msg: req.body.msg })) return res.json({ error: 'invalid form data'} );
 
   let id = req.params.id;
 
@@ -70,10 +68,9 @@ const addNewComment = async (req, res) => {
 }
 
 const updatePost = async (req, res) => {
-  const id = req.params.id;
+  if(!validatePost({title: req.body.title, msg: req.body.msg})) return res.json({ error: 'invalid form data'} );
 
-  const { error } = validatePost({ title: req.body.title, msg: req.body.msg });
-  if(error) return res.json(error);
+  const id = req.params.id;
 
   try {
     await db.collection('posts').doc(id).update({ msg: req.body.msg, title: req.body.title });
@@ -84,8 +81,7 @@ const updatePost = async (req, res) => {
 }
 
 const updateComment = async (req, res) => {
-  const { error } =  validateComment({ msg: req.body.msg });
-  if(error) return res.json(error);
+  if(!validateComment({ msg: req.body.msg })) return res.json({ error: 'invalid form data'} );
   
   const key = parseInt(req.params.key);
   let comments = [];
