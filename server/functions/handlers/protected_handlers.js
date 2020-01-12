@@ -150,7 +150,31 @@ const deleteComment = async (req, res) => {
     return res.json({ error: 'something went wrong deleteing comments' });
   }
 
+  try {
+    await db.collection('posts').doc(comments.postId).update({ counts:  admin.firestore.FieldValue.increment(-1)});
+  } catch (error) {
+    return res.json({ error: "increment function is broken" });
+  }
+
   return res.status(201).json({ message: "comment deleted successfully"});
+}
+
+const upvote = async (req, res) => {
+  try {
+    await db.collection('posts').doc(req.params.id).update({ likes: admin.firestore.FieldValue.increment(1) });
+    return res.status(204);
+  } catch (error) {
+    return res.json({ error: 'something went wrong' });
+  }
+}
+
+const downvote = async (req, res) => {
+  try {
+    await db.collection('posts').doc(req.params.id).update({ likes: admin.firestore.FieldValue.increment(-1) });
+    return res.status(204);
+  } catch (error) {
+    return res.json({ error: 'something went wrong' });
+  }
 }
 
 module.exports = {
@@ -159,5 +183,7 @@ module.exports = {
   updateComment,
   updatePost,
   deletePost,
-  deleteComment
+  deleteComment,
+  upvote,
+  downvote
 }
