@@ -10,7 +10,7 @@ const addNewPost = async (req, res) => {
 
   try {
     const post = {
-      author: req.body.author,
+      author: req.user.handle,
       title: req.body.title,
       msg: req.body.msg,
       tags: req.body.tags,
@@ -36,16 +36,16 @@ const addNewComment = async (req, res) => {
 
   const comment = {
     key: Math.floor(Math.random()*10000),
-    user: req.body.user,
+    author: req.user.handle,
     msg: req.body.msg,
     createdAt: new Date().toISOString()
   };
-  let comments = [];
+  let postId;
   
   try {
     const docs = await db.collection('comments').where('postId', '==', id).get();
     docs.forEach( doc => {
-      comments = doc.data();
+      postId = doc.data().postId;
       id = doc.id;
     });
   } catch (error) {
@@ -53,13 +53,13 @@ const addNewComment = async (req, res) => {
   }
 
   try {
-    await db.collection('comments').doc(id).update({ cmnts: admin.firestore.FieldValue.arrayUnion(comment)});
+    await db.collection('comments').doc(id).update({ cmnts: admin.firestore.FieldValue.arrayUnion(comment) });
   } catch (error) {
     return res.json({ error: "update function is broken" });
   }
 
   try {
-    await db.collection('posts').doc(comments.postId).update({ counts:  admin.firestore.FieldValue.increment(1)});
+    await db.collection('posts').doc(postId).update({ counts:  admin.firestore.FieldValue.increment(1)});
   } catch (error) {
     return res.json({ error: "increment function is broken" });
   }
@@ -73,11 +73,17 @@ const updatePost = async (req, res) => {
   const id = req.params.id;
 
   try {
-    await db.collection('posts').doc(id).update({ msg: req.body.msg, title: req.body.title });
-    return res.status(201).json({ message: "post-body successfully edited"});
+    const docRef =  db.collection('posts').doc(id);
+    const post = await docRef.get();
+
+    if(post.data().author != req.user.handle) return res.status(403).json({ error: `unauthorized access` });
+    
+    await docRef.update({ msg: req.body.msg, title: req.body.title });
   } catch (error) {
     return res.json({ error: 'something went wrong' });
   }
+
+  return res.status(201).json({ message: "post-body successfully edited"});
 }
 
 const updateComment = async (req, res) => {
@@ -100,6 +106,9 @@ const updateComment = async (req, res) => {
   const idx = comments.findIndex(comment => {
     return comment.key === key;
   });
+
+  if(comments[idx].author != req.user.handle) return res.status(403).json({ error: 'unauthorized access' });
+
   comments[idx].msg = req.body.msg;
   
   try {
@@ -111,8 +120,11 @@ const updateComment = async (req, res) => {
 }
 
 const deletePost = async (req, res) => {
+  const docRef = db.collection('posts').doc(req.params.id);
+  const post = await docRef.get();
+  if(post.data().author != req.user.handle) return res.status(403).json({ error: `unauthorized access` });
   try {
-    await db.collection('posts').doc(req.params.id).delete();
+    await docRef.delete();
   } catch (error) {
     return res.json({ error: 'something went wrong' });
   }
@@ -142,7 +154,13 @@ const deleteComment = async (req, res) => {
     return res.json({ error: 'something went wrong' });
   }
 
-  comments = comments.filter(comment => comment.key != key);
+  const idx = comments.findIndex(comment => {
+    return comment.key === key;
+  });
+
+  if(comments[idx].author != req.user.handle) return res.status(403).json({ error: 'unauthorized access' });
+
+  comments.splice(idx, 1);
 
   try {
     await db.collection('comments').doc(id).update({ cmnts: comments });
@@ -151,7 +169,7 @@ const deleteComment = async (req, res) => {
   }
 
   try {
-    await db.collection('posts').doc(comments.postId).update({ counts:  admin.firestore.FieldValue.increment(-1)});
+    await db.collection('posts').doc(req.params.id).update({ counts:  admin.firestore.FieldValue.increment(-1)});
   } catch (error) {
     return res.json({ error: "increment function is broken" });
   }
@@ -161,8 +179,12 @@ const deleteComment = async (req, res) => {
 
 const upvote = async (req, res) => {
   try {
-    await db.collection('posts').doc(req.params.id).update({ likes: admin.firestore.FieldValue.increment(1) });
-    return res.status(204);
+    await db.collection('posts').doc(req.params.id).update({
+      likes: admin.firestore.FieldValue.increment(1),
+      upvotes: admin.firestore.FieldValue.arrayUnion(req.user.handle),
+      downvotes: admin.firestore.FieldValue.arrayRemove(req.user.handle)
+    });
+    return res.status(204).json({ success: 'successfully upvoted the post' });
   } catch (error) {
     return res.json({ error: 'something went wrong' });
   }
@@ -170,8 +192,12 @@ const upvote = async (req, res) => {
 
 const downvote = async (req, res) => {
   try {
-    await db.collection('posts').doc(req.params.id).update({ likes: admin.firestore.FieldValue.increment(-1) });
-    return res.status(204);
+    await db.collection('posts').doc(req.params.id).update({
+      unlikes: admin.firestore.FieldValue.increment(1),
+      downvotes: admin.firestore.FieldValue.arrayUnion(req.user.handle),
+      upvotes: admin.firestore.FieldValue.arrayRemove(req.user.handle)
+    });
+    return res.status(204).json({ success: 'successfully downvoted the post' });
   } catch (error) {
     return res.json({ error: 'something went wrong' });
   }

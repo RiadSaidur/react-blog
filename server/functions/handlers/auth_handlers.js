@@ -31,7 +31,8 @@ const signup = async (req, res) => {
     const idToken = await data.user.getIdToken();
     
     const credentials ={
-      email: newUser.email
+      uid: data.user.uid,
+      handle: newUser.handle
     }
 
     await db.collection('users').doc(newUser.handle).set(credentials);
