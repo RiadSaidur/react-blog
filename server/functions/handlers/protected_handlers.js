@@ -15,6 +15,9 @@ const addNewPost = async (req, res) => {
       msg: req.body.msg,
       tags: req.body.tags,
       counts: 0,
+      likes: 0,
+      upvote: [],
+      downvote: [],
       createdAt: new Date().toISOString()
     }
     const newpost = await db.collection('posts').add(post);
