@@ -15,11 +15,13 @@ function EditComment({ id }){
 
   
   return(
-    <div className="editComment-container">
-      <form onSubmit={updateComment}>
-        <textarea cols="30" rows="10"  defaultValue={comment.msg} />
-        <input type="submit" value="Save"/>
+    <div className="nu-elevate-card sign-container contents">
+      <h2>Update Comment</h2>
+      <form onSubmit={updateComment} className="form">
+        <textarea cols="30" rows="10"  defaultValue={comment.msg} className="nu-elevate-cta"/>
+        <input type="submit" value="Save" className="nu-elevate-cta cta"/>
       </form>
+      <button className="cancel nu-elevate-cta">Delete Comment</button>
     </div>
   )
 }

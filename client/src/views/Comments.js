@@ -1,61 +1,78 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+
+import CommentBox from '../components/CommentBox'
 
 import '../stylesheets/Comments.css'
 
 function Comments({ match }){
+  const [newComment, setNewComment] = useState(false);
+  const [comments, setComments] = useState({
+    postId: 'g2lGLvJ3ZOwOeNb7SeQd',
+    cmnts: [
+      {
+        key: 353.09430784945863,
+        user: 'voomoo',
+        msg: 'This is from an API',
+        createdAt: '2020-01-08T20:21:08.845Z'
+      },
+      {
+        msg: 'Where are mmy previous comments?',
+        createdAt: '2020-01-08T20:27:48.853Z',
+        key: 556.9881502735184,
+        user: 'voomoo'
+      },
+      {
+        msg: 'They are gone :(',
+        createdAt: '2020-01-08T20:29:46.253Z',
+        key: 195.3211026050008,
+        user: 'rakib'
+      },
+      {
+        key: 198.060956935185,
+        user: 'saidur',
+        msg: 'Stop whining now',
+        createdAt: '2020-01-08T20:31:34.013Z'
+      },
+      {
+        key: 9759,
+        user: 'dudeboi',
+        msg: 'like comment kore pasay takun',
+        createdAt: '2020-01-08T20:35:54.611Z'
+      },
+      {
+        key: 8091,
+        user: 'saidur',
+        msg: 'edited my comment again',
+        createdAt: '2020-01-09T05:37:27.960Z'
+      }
+    ]
+  });
   const temp = {
     key: 14,
     title: 'The End',
     msg: 'something will be written here',
-    comments: [
-      {
-        key: 0,
-        user: 'chiki54',
-        msg: 'so familiar',
-        date: '12:17 AM 21/12/2019'
-      },
-      {
-        key: 1,
-        user: 'chiki54',
-        msg: 'and overwhelmingly pure',
-        date: '12:17 AM 21/12/2019'
-      },
-      {
-        key: 2,
-        user: 'chiki54',
-        msg: 'this from that I hold now',
-        date: '12:17 AM 21/12/2019'
-      },
-      {
-        key: 3,
-        user: 'chiki54',
-        msg: 'wide eyes and hopefully wild',
-        date: '12:17 AM 21/12/2019'
-      }
-    ]
   }
   const commentHandler = event => {
     event.preventDefault();
     event.persist();
     console.log(event);
   }
+  const toggleBox = () => {
+    setNewComment(!newComment);
+  }
   return(
     <div>
-      <div className="post">
+      <div className="post nu-elevate-card">
         <h2>{temp.title}</h2>
         <p>{temp.msg}</p>
       </div>
-      <div>
-        <form onSubmit={commentHandler}>
-          <textarea cols="30" rows="10"></textarea>
-          <input type="submit" value='comment'/>
-        </form>
-      </div>
+      <button className='nu-elevate-cta cta newcomment' onClick={toggleBox}>+ Comment</button>
+      {newComment && <CommentBox commentHandler={commentHandler}/>}
       <div className="comments">
         {
-          temp.comments.map(comment => (
-            <div className="comment post" key={comment.key}>
+          comments.cmnts.map(comment => (
+            <div className="comment post nu-elevate-card" key={comment.key}>
               <Link to={`/${comment.user}`}>
                 <h4>{comment.user}</h4>
               </Link>

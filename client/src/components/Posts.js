@@ -9,11 +9,11 @@ function NewPost({ posts, upvote, downvote }){
       {
         posts.map(post => (
           
-            <div className="post" key={post.key}>
+            <div className="post nu-elevate-card" key={post.key}>
               <Link to={`/${post.author}`}>
                 <p className="post-author">{post.author}</p>
               </Link>
-              <Link to={`/comments/${post.key}`}>
+              <Link to={`/comments/${post.id}`}>
                 <h3>{post.title}</h3>
                 <p>{post.msg}</p>
               </Link>

@@ -6,7 +6,7 @@ import '../stylesheets/Header.css'
 function Header (){
   return(
     <div className='header'>
-      <Link to='/'><h1>REDblog</h1></Link>
+      <Link to='/'><h1>pixxelbook</h1></Link>
       <ul className='nav-links'>
         <Link to='/signin'><li>Sign In</li></Link>
         <Link to='/signup'><li>Sign Up</li></Link>

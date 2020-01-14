@@ -14,17 +14,16 @@ function Signin(){
     console.table(user);
   };
   return(
-    <div className="signUp-container">
-      <button>Sign In</button>
-      <h1>Sign Up</h1>
-      <form onSubmit={formHandler}>
-        <input type="email" placeholder="Email"/>
-        <input type="password" placeholder="Password"/>
-        <input type="password" placeholder="Repeat Password"/>
-        <input type="date"/>
-        <input type="submit" value="Sign In"/>
+    <div className="sign-container nu-elevate-card contents">
+      <h2>Sign Up</h2>
+      <form onSubmit={formHandler} className="form">
+        <input type="email" placeholder="Email" className="nu-elevate-card"/>
+        <input type="password" placeholder="Password" className="nu-elevate-card"/>
+        <input type="password" placeholder="Repeat Password" className="nu-elevate-card"/>
+        <input type="text" placeholder="user handle" className="nu-elevate-card"/>
+        <input type="submit" value="Sign In" className="nu-elevate-card cta"/>
       </form>
-      <p>Alredy have an account? Sign In instead!</p>
+      <p className="sign-options">Alredy have an account? Sign In instead!</p>
     </div>
   )
 }

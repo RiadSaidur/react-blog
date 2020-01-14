@@ -10,10 +10,8 @@ function Edit({ match }){
   
   return(
     <div className="edit-contrainer">
-      <h1>Update</h1>
       { match.params.type === 'comment' && <EditComment id={match.params.id}/> }
       { match.params.type === 'post' && <EditPost id={match.params.id}/> }
-      <button onClick={dlt} className="delete">Delete Comment</button>
     </div>
   )
 }

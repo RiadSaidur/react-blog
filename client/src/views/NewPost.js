@@ -15,12 +15,14 @@ function NewPost(){
     // if(post.title && post.msg)updatePosts([...posts, post]);
   };
   return(
-    <div>
-      <form onSubmit={newPost}>
-        <input type="text" placeholder="Title"/>
-        <textarea placeholder="Post" cols="30" rows="7"></textarea>
-        <input type="submit" value="Post"/>
+    <div className="nu-elevate-card sign-container contents">
+      <h2>Add New Post</h2>
+      <form onSubmit={newPost} className="form">
+        <input type="text" placeholder="Title" className="nu-elevate-cta"/>
+        <textarea placeholder="Post" rows="5" className="nu-elevate-cta"></textarea>
+        <input type="submit" value="Post" className="nu-elevate-cta cta"/>
       </form>
+      <button className="sign-options cancel nu-elevate-cta">Cancel</button>
     </div>
   )
 }

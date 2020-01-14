@@ -16,12 +16,14 @@ function EditPost({ id }){
 
   
   return(
-    <div className="editComment-container">
-      <form onSubmit={updatePost}>
-        <input type="text" defaultValue={post.title}/>
-        <textarea cols="30" rows="10"  defaultValue={post.msg} />
-        <input type="submit" value="Save"/>
+    <div className="nu-elevate-card sign-container contents">
+      <h2>Update Post</h2>
+      <form onSubmit={updatePost} className="form">
+        <input type="text" defaultValue={post.title} className="nu-elevate-cta"/>
+        <textarea rows="7"  defaultValue={post.msg} className="nu-elevate-cta"/>
+        <input type="submit" value="Save" className="nu-elevate-cta cta"/>
       </form>
+      <button className="cancel nu-elevate-cta">Delete Post</button>
     </div>
   )
 }

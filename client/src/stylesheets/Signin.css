@@ -1,0 +1,48 @@
+.sign-container {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.contents {
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.contents h2{
+  margin: 1rem auto;
+}
+
+.form input, .form textarea {
+  padding: 1rem 1rem;
+  margin: 1rem 0;
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(255, 255, 255);
+}
+
+.form textarea{
+  height: 150%;
+}
+
+.form .cta {
+  background-color: skyblue;
+  width: 70%;
+  margin: 1rem auto;
+}
+
+.sign-options {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.cancel {
+  padding: .8rem 2rem;
+  background-color: rgba(220, 20, 60, 0.5);
+  border-radius: 10px;
+  margin: 1rem auto 1rem auto;
+}
