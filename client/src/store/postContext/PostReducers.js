@@ -1,9 +1,8 @@
 export const UPVOTE = 'UPVOTE';
 export const DOWNVOTE = 'DOWNVOTE';
 export const ADD_NEW_POST = 'ADD_NEW_POST';
-export const ADD_NEW_COMMENT = 'ADD_NEW_COMMENT';
+export const UPDATE_POST = 'UPDATE_POST'
 export const REMOVE_POST = 'REMOVE_POST';
-export const REMOVE_COMMENT ='REMOVE_COMMENT';
 
 const upvote = (key, state) => {
   let updates = state;
@@ -26,19 +25,18 @@ const downvote = (key, state) => {
 }
 
 const addNewPost = (post, state) => {
-  
+  console.log(post);
+  return state;
 }
 
-const addNewComment = (id, state) => {
-
+const updatePost = (content, state) => {
+  console.log(content);
+  return state;
 }
 
 const removePost = (id, state) => {
-
-}
-
-const removeComment = (id, state) => {
-
+  console.log(id);
+  return state;
 }
 
 export const postReducer = (state, action) => {
@@ -48,13 +46,11 @@ export const postReducer = (state, action) => {
     case DOWNVOTE:
       return downvote(action.key, state);
     case ADD_NEW_POST:
-      return
-    case ADD_NEW_COMMENT:
-      return
+      return addNewPost(action.post, state);
+    case UPDATE_POST:
+      return updatePost(action.content, state);
     case REMOVE_POST:
-      return
-    case REMOVE_COMMENT:
-      return
+      return removePost(action.id, state);
     default:
       return state;
   }

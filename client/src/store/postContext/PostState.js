@@ -1,15 +1,15 @@
 import React, { useReducer } from 'react'
 
-import PostContext from '../contexts/PostContext';
+import PostContext from './PostContext';
+
 import {
   postReducer,
   UPVOTE,
-  DOWNVOTE
-  // ADD_NEW_POST,
-  // ADD_NEW_COMMENT,
-  // REMOVE_POST,
-  // REMOVE_COMMENT
-} from '../reducers/PostReducers'
+  DOWNVOTE,
+  ADD_NEW_POST,
+  UPDATE_POST,
+  REMOVE_POST
+} from './PostReducers'
 
 const PostState = props => {
   const posts = [
@@ -71,15 +71,20 @@ const PostState = props => {
 
   const upvote = key => dispatch({ type: UPVOTE, key });
   const downvote = key => dispatch({ type: DOWNVOTE, key });
+  const addNewPost = post => dispatch({ type: ADD_NEW_POST, post });
+  const updatePost = content => dispatch ({ type: UPDATE_POST, content });
+  const removePost = id => dispatch({ type: REMOVE_POST, id });
 
   return (
     <PostContext.Provider
       value={{
         posts: postState,
         upvote,
-        downvote
-      }}
-    >
+        downvote,
+        addNewPost,
+        updatePost,
+        removePost
+      }}>
       {props.children}
     </PostContext.Provider>
   )

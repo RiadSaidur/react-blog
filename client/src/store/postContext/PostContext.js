@@ -5,7 +5,6 @@ export default React.createContext({
   upvote: key => {},
   downvote: key => {},
   addNewPost: post => {},
-  addNewComment: id => {},
+  updatePost: content => {},
   removePost: id => {},
-  removeComment: id => {}
 });
