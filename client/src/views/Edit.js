@@ -6,7 +6,7 @@ import EditPost from '../components/EditPost';
 function Edit({ match }){
   return(
     <div className="edit-contrainer">
-      { match.params.type === 'comment' && <EditComment id={match.params.id}/> }
+      { match.params.type === 'comment' && <EditComment id={match.params.id} commentKey={match.params.key}/> }
       { match.params.type === 'post' && <EditPost id={match.params.id}/> }
     </div>
   )

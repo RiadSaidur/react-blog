@@ -1,5 +1,5 @@
 import React from 'react'
-import PostContext from '../store/contexts/PostContext'
+import PostContext from '../store/postContext/PostContext';
 
 export default function EditPost({ id }) {
   return (

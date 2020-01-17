@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Posts from '../components/Posts';
 
 import '../stylesheets/Home.css'
-import PostContext from '../store/contexts/PostContext';
+import PostContext from '../store/postContext/PostContext';
 
 function Home(){
   return(
