@@ -41,3 +41,11 @@
   font-size: .8rem;
   padding: .5rem 0;
 }
+
+.vote-cta{
+  height: 30px;
+}
+
+.vote-cta-active{
+  filter: opacity(.5) drop-shadow(0 0 0 red);
+}
