@@ -2,7 +2,7 @@ import React from 'react';
 
 import '../stylesheets/About.css'
 
-function Signin(){
+function About(){
   return(
     <div className="about-container">
 
@@ -29,4 +29,4 @@ function Signin(){
   )
 }
 
-export default Signin;
+export default About;

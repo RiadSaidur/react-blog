@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 
 import '../stylesheets/Posts.css'
 
-function NewPost({ posts, upvote, downvote }){
+function Posts({ posts, upvote, downvote }){
   return(
     <div className="posts">
       {
         posts.map(post => (
           
-            <div className="post nu-elevate-card" key={post.key}>
+            <div className="post nu-elevate-card" key={post.id}>
               <Link to={`/${post.author}`}>
                 <p className="post-author">{post.author}</p>
               </Link>
@@ -19,21 +19,26 @@ function NewPost({ posts, upvote, downvote }){
               </Link>
               <div className="tags">
                 <h4>tags:&nbsp;</h4>
-                {post.tags.map(tag => (                  
-                  <Link to={`/p/${tag}`}>{tag}&nbsp;</Link>
+                {post.tags.map((tag, idx) => (                  
+                  <Link to={`/p/${tag}`} key={idx}>{tag}&nbsp;</Link>
                 ))}
               </div>
               <div className="post-footer">
                 <p>{post.likes}</p>
                 <div className="post-footer-cta">
-                  <button className="post-cta" onClick={() => upvote(post.key)}>Upvote</button>
+                  <button className="post-cta" onClick={() => upvote(post.id)}>
+                    <img src={require('../assets/heart.png')} alt='Downvote' className={
+                      post.upvotes.includes("boomer") ? "vote-cta vote-cta-active" : "vote-cta"}/>
+                  </button>
                   <button
-                    onClick={() => downvote(post.key)}
-                    className={post.likes<=0 ? 'hidden' : 'post-cta'}
-                  >Downvote</button>
+                    onClick={() => downvote(post.id)}
+                    className="post-cta"
+                  ><img src={require('../assets/brokenheart.png')} alt='Downvote' className={
+                    post.downvotes.includes("boomer") ? "vote-cta vote-cta-active" : "vote-cta"}/>
+                  </button>
                 </div>
               </div>
-              <Link to={`/edit/post/${post.key}`}>
+              <Link to={`/edit/post/${post.id}`}>
                 <button>Edit</button>
               </Link>
             </div>
@@ -43,4 +48,4 @@ function NewPost({ posts, upvote, downvote }){
   )
 }
 
-export default NewPost;
+export default Posts;

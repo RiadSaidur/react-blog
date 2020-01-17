@@ -1,31 +1,33 @@
-import React from "react";
+import React from 'react'
+import PostContext from '../store/contexts/PostContext'
 
-function EditPost({ id }){
-  let post = {
-    key: 0,
-    title: 'Title to update',
-    msg: 'Msg to update',
-  }
+export default function EditPost({ id }) {
+  return (
+    <PostContext.Consumer>{ ({ posts, updatePost, removePost }) => {
+      const idx = posts.findIndex(el => el.id === id );
+      const post = { ...posts[idx] };
+      const updateHandler = event => {
+        event.preventDefault();
+        event.persist();
+        post.title = event.target.elements[0].value;
+        post.msg = event.target.elements[1].value;
+        console.log(post);
+        updatePost(post);
+      }
 
-  const updatePost = event => {
-    event.preventDefault();
-    event.persist();
-    post.title = event.target.elements[0].value;
-    post.msg = event.target.elements[1].value;
-  }
-
+      const deletePost = () => removePost(id);
   
-  return(
-    <div className="nu-elevate-card sign-container contents">
-      <h2>Update Post</h2>
-      <form onSubmit={updatePost} className="form">
-        <input type="text" defaultValue={post.title} className="nu-elevate-cta"/>
-        <textarea rows="7"  defaultValue={post.msg} className="nu-elevate-cta"/>
-        <input type="submit" value="Save" className="nu-elevate-cta cta"/>
-      </form>
-      <button className="cancel nu-elevate-cta">Delete Post</button>
-    </div>
+      return(
+        <div className="nu-elevate-card sign-container contents">
+          <h2>Update Post</h2>
+          <form onSubmit={updateHandler} className="form">
+            <input type="text" defaultValue={post.title} className="nu-elevate-cta"/>
+            <textarea rows="7"  defaultValue={post.msg} className="nu-elevate-cta"/>
+            <input type="submit" value="Save" className="nu-elevate-cta cta"/>
+          </form>
+          <button onClick={deletePost} className="cancel nu-elevate-cta">Delete Post</button>
+        </div>
+      )
+    }}</PostContext.Consumer>
   )
 }
-
-export default EditPost;

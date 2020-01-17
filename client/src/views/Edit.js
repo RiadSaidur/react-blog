@@ -4,10 +4,6 @@ import EditComment from "../components/EditComment";
 import EditPost from '../components/EditPost';
 
 function Edit({ match }){
-  const dlt = () => {
-    //Delete Post
-  }
-  
   return(
     <div className="edit-contrainer">
       { match.params.type === 'comment' && <EditComment id={match.params.id}/> }
