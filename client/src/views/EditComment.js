@@ -2,14 +2,14 @@ import React from "react";
 import CommentContext from "../store/commentContext/CommentContext";
 
 // TODO: USE Commment.Context
-function EditComment({ id, commentKey }){
+function EditComment({ match }){
+  const id = match.params.id;
+  const commentKey = match.params.key;
   return (
-    <CommentContext.Consumer>{ ({ updateComment, removeComment}) => {
-      const comment = {
-        postId: id,
-        key: commentKey,
-        msg: 'okay'
-      };
+    <CommentContext.Consumer>{ ({ commentCollection, updateComment, removeComment}) => {
+      const comments = commentCollection.find(el => el.postId === 'g2lGLvJ3ZOwOeNb7SeQd');
+      const comment = comments.cmnts.find(el => el.key == commentKey);
+      
       const updateHandler = event => {
         event.preventDefault();
         event.persist();
@@ -18,6 +18,7 @@ function EditComment({ id, commentKey }){
         comment.msg = event.target.elements[0].value;
         updateComment(comment);
       };
+      
       const deleteComment = () => removeComment(comment);
       return(
         <div className="nu-elevate-card sign-container contents">

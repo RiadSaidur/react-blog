@@ -1,7 +1,8 @@
 import React from 'react'
 import PostContext from '../store/postContext/PostContext';
 
-export default function EditPost({ id }) {
+export default function EditPost({ match }) {
+  const id = match.params.id;
   return (
     <PostContext.Consumer>{ ({ posts, updatePost, removePost }) => {
       const idx = posts.findIndex(el => el.id === id );
