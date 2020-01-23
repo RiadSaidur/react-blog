@@ -13,6 +13,7 @@
 
 .newcomment{
   width: 100%;
+  margin-bottom: 1rem;
   background-color: skyblue;
   border-radius: 10px;
   padding: .5rem 1rem;

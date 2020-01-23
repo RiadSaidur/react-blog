@@ -17,6 +17,16 @@ const getAllPosts = async (req, res) => {
   }
 }
 
+const getSinglePosts = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const doc = (await db.collection('posts').doc(id).get()).data();
+    return res.json(doc);
+  } catch (error) {
+    return res.status(500).json({ error: 'something went wrong' });
+  }
+}
+
 const getPostComments = async (req, res) => {
   const id = req.params.id;
   try {
@@ -27,7 +37,7 @@ const getPostComments = async (req, res) => {
     });
     return res.json(comments);
   } catch (error) {
-    return res.json({ error: 'something went wrong' });
+    return res.status(500).json({ error: 'something went wrong' });
   }
 }
 
@@ -67,6 +77,7 @@ const getPostsByUser = async (req, res) => {
 
 module.exports = {
   getAllPosts,
+  getSinglePosts,
   getPostComments,
   getPostsbyTag,
   getPostsByUser

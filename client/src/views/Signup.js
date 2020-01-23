@@ -2,9 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import UserContext from '../store/userContext/UserContext';
 
-function Signin(){
+function Signin({ history }){
+  console.log('Signup')
   return(
-    <UserContext.Consumer>{ ({ signUp }) => {
+    <UserContext.Consumer>{ ({ signUp, restoreCreds }) => {
       const formHandler = event => {
         event.preventDefault();
         event.persist();
@@ -14,8 +15,10 @@ function Signin(){
           password: event.target.elements[2].value,
           repeatPassword: event.target.elements[3].value
         }
-        signUp(creds);
+        const payload = { creds, history };
+        signUp(payload);
       };
+      // restoreCreds();
       return (
         <div className="sign-container nu-elevate-card contents">
           <h2>Sign Up</h2>

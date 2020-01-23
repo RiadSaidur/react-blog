@@ -1,3 +1,7 @@
+input:last-child{
+  cursor: pointer;
+}
+
 input, textarea{
   width: 100%;
   display: block;

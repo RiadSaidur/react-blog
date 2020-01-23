@@ -1,50 +1,70 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import CommentBox from '../components/CommentBox'
 
+import {getSinglePost} from '../services/public'
+
 import '../stylesheets/Comments.css'
 
 import CommentContext from '../store/commentContext/CommentContext';
+import PostContext from '../store/postContext/PostContext';
 
 function Comments({ match }){
   const [newComment, setNewComment] = useState(false);
-  const temp = {
-    key: 14,
-    title: 'The End',
-    msg: 'something will be written here',
+  const [comments, setCommentsToState] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [post, setPost] = useState([]);
+  const toggleBox = () => setNewComment(!newComment);
+
+  const { commentCollection, setComments } = useContext(CommentContext);
+  const { posts } = useContext(PostContext);
+
+  const getComments = async id => {
+    await setComments(match.params.id);
+    setPost(await getSinglePost(match.params.id));
+    setIsLoading(false);
   }
-  const toggleBox = () => {
-    setNewComment(!newComment);
-  }
-  return(
-    <CommentContext.Consumer>{ ({ commentCollection }) => {
-      const comments = commentCollection.find(el => el.postId === 'g2lGLvJ3ZOwOeNb7SeQd');
-      return (
-        <div>
-          <div className="post nu-elevate-card">
-            <h2>{temp.title}</h2>
-            <p>{temp.msg}</p>
-          </div>
-          <button className='nu-elevate-cta cta newcomment' onClick={toggleBox}>+ Comment</button>
-          {newComment && <CommentBox id={match.params.id} />}
-          <div className="comments">
-            {
-              comments.cmnts.map(comment => (
-                <div className="comment post nu-elevate-card" key={comment.key}>
-                  <Link to={`/${comment.user}`}>
-                    <h4>{comment.user}</h4>
-                  </Link>
-                  <p>{comment.msg}</p>
-                  <p>{comment.date}</p>
-                  <Link to={`/edit/comment/${comments.postId}/${comment.key}`}><button>Edit</button></Link>
-                </div>
-              ))
-            }
-          </div>
-        </div>
-      )
-    }}</CommentContext.Consumer>
+
+  useEffect(() => {
+    getComments();
+    // const temp = posts.find(el => el.id === match.params.id);
+    // setPost(temp);
+    
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    if(!isLoading) {setCommentsToState(commentCollection.cmnts); console.log(post)}
+    // eslint-disable-next-line
+  }, [isLoading]);  
+
+  return (
+    <div>
+      {
+        post.status>=200 && post.status<300 ? 
+        <div className="post nu-elevate-card">
+          <h2>{post.data.title}</h2>
+          <p>{post.data.msg}</p>
+        </div> : <p>{post.error}</p>
+      }
+      <button className='nu-elevate-cta cta newcomment' onClick={toggleBox}>+ Comment</button>
+      {newComment && <CommentBox id={match.params.id} />}
+      <div className="comments">
+        {
+          comments.map(comment => (
+            <div className="comment post nu-elevate-card" key={comment.key}>
+              <Link to={`/${comment.user}`}>
+                <h4>{comment.user}</h4>
+              </Link>
+              <p>{comment.msg}</p>
+              <p>{comment.date}</p>
+              <Link to={`/edit/comment/${match.params.id}/${comment.key}`}><button>Edit</button></Link>
+            </div>
+          ))
+        }
+      </div>
+    </div>
   )
 }
 

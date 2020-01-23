@@ -1,7 +1,7 @@
 import React from 'react';
 import PostContext from '../store/postContext/PostContext';
 
-function NewPost(){
+function NewPost({ history }){
   return(
     <PostContext.Consumer>{ ({ addNewPost }) => {
       const newPost = event => {
@@ -10,6 +10,7 @@ function NewPost(){
         const post = {
           title: event.target.elements[0].value,
           msg: event.target.elements[1].value,
+          tags: [`boom`]
         }
         addNewPost(post);
       };
@@ -21,7 +22,7 @@ function NewPost(){
             <textarea placeholder="Post" rows="5" className="nu-elevate-cta"></textarea>
             <input type="submit" value="Post" className="nu-elevate-cta cta"/>
           </form>
-          <button className="sign-options cancel nu-elevate-cta">Cancel</button>
+          <button className="sign-options cancel nu-elevate-cta" onClick={history.goBack}>Cancel</button>
         </div>
       )
     }}</PostContext.Consumer>

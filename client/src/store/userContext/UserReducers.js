@@ -1,65 +1,101 @@
+import {
+  signInValidator,
+  signUpValidator
+} from "../../utils/validators";
+
+import {
+  SIGNIN,
+  SIGNUP
+} from '../../services/auth'
+
+export const RESTORE_CREDS = 'RESTORE_CREDS';
 export const SIGN_UP = 'SIGN_UP';
 export const SIGN_IN = 'SIGN_IN';
 export const SIGN_OUT = 'SIGN_OUT';
 
-const isEmail = email => {
-  const regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  if (email.match(regEx)) return true;
-  else return false;
-};
+const saveCreds = (token, history) => {
+  localStorage.setItem('idToken', token);
+  history.push('/');
+}
 
-const signUp = (creds, state) => {
+const restoreCreds = state => {
   const updates = state;
-  updates.errors = [];
-  if(!isEmail(creds.email)) updates.errors.push('invalid Email');
-  if(creds.handle.length < 3) updates.errors.push('User Handle must be at least 3 characters');
-  if(creds.password.length < 8) updates.errors.push('Password must be at least 8 characters');
-  if(creds.password != creds.repeatPassword) updates.errors.push('Passwords must match');
-  if(updates.errors.length){
-    console.log(updates.errors);
-    return {...updates};
+  if(localStorage.idToken){
+    // authenticate from server first
+    updates.token = localStorage.idToken;
+    updates.isAuth = true;
+    console.log('authenticate from server first');
   }
+  return {...updates};
+}
+
+const signUp = async ({ creds, history }, state) => {
+  const updates = state;
+
   const userCreds = {
     email: creds.email,
     handle: creds.handle,
     password: creds.password,
-    repeatPassword: creds.repeatPassword
+    confirmPassword: creds.repeatPassword
   };
-  console.log(userCreds);
-  return {...updates};
-}
 
-const signIn = (creds, state) => {
-  const updates = state;
-  updates.errors = [];
-  if(!isEmail(creds.email)) updates.errors.push('invalid Email');
-  if(creds.password.length < 8) updates.errors.push('Password must be at least 8 characters');
+  updates.errors = signUpValidator(userCreds);
+  
   if(updates.errors.length){
     console.log(updates.errors);
     return {...updates};
   }
+
+  updates.token = await SIGNUP(userCreds);
+  
+  saveCreds(updates.token, history);
+  
+  updates.isAuth = true;
+  console.log(updates);
+  return {...updates};
+}
+
+const signIn = async ({ creds, history }, state) => {
+  const updates = state;
+
   const userCreds = {
     email: creds.email,
     password: creds.password
   };
-  console.log(userCreds);
+
+  updates.errors = signInValidator(userCreds);
+  
+  if(updates.errors.length){
+    console.log(updates.errors);
+    return {...updates};
+  }
+
+  updates.token = await SIGNIN(userCreds);
+  
+  saveCreds(updates.token, history);
+
   updates.isAuth = true;
+  console.log(updates);
   return {...updates};
 }
 
 const signOut = state => {
   console.log('sign out');
   const updates = state;
+  localStorage.removeItem('idToken', updates.token);
   updates.isAuth = false;
-  return updates;
+  updates.token = '';
+  return {...updates};
 }
 
-export const UserReducer = (state, action) => {
+export const UserReducer = async (state, action) => {
   switch(action.type) {
+    case RESTORE_CREDS:
+      return restoreCreds(state);
     case SIGN_UP:
-      return signUp(action.creds, state);
+      return signUp(action.payload, state);
     case SIGN_IN:
-      return signIn(action.creds, state);
+      return await signIn(action.payload, state);
     case SIGN_OUT:
       return signOut(state);
     default:

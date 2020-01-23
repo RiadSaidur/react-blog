@@ -12,7 +12,7 @@ const authorized = async (req, res, next) => {
   try {
     req.user = await admin.auth().verifyIdToken(idToken);
   } catch (error) {
-    return res.json({ error: 'something went wrong verifying token' });
+    return res.status(401).json({ error: 'something went wrong verifying token', idToken });
   }
 
   try {

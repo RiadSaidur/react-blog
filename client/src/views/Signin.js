@@ -4,17 +4,19 @@ import { Link } from 'react-router-dom';
 import '../stylesheets/Signin.css'
 import UserContext from '../store/userContext/UserContext';
 
-function Signin(){
+function Signin({ history }){
+  console.log('Signin')
   return(
     <UserContext.Consumer>{ ({ signIn }) => {
-      const formHandler = event => {
+      const formHandler = async event => {
         event.preventDefault();
         event.persist();
         const creds = {
           email: event.target.elements[0].value,
           password: event.target.elements[1].value
         }
-        signIn(creds);
+        const payload = { creds, history };
+        signIn(payload);
       };
       return (
         <div className="sign-container">

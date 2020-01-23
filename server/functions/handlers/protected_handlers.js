@@ -25,10 +25,10 @@ const addNewPost = async (req, res) => {
       await db.collection('comments').add({ cmnts: [], postId: newpost.id });
       return res.json({ message: "Document Created Successfully" });
     } catch (error) {
-      return res.json({ error: 'something went wrong' });
+      return res.status(500).json({ error: 'something went wrong' });
     }
   } catch (error) {
-    return res.json({ error: 'something went wrong' });
+    return res.status(500).json({ error: 'something went wrong' });
   }
 }
 
@@ -52,19 +52,19 @@ const addNewComment = async (req, res) => {
       id = doc.id;
     });
   } catch (error) {
-    return res.json({ error: 'something went wrong' });
+    return res.status(500).json({ error: 'something went wrong' });
   }
 
   try {
     await db.collection('comments').doc(id).update({ cmnts: admin.firestore.FieldValue.arrayUnion(comment) });
   } catch (error) {
-    return res.json({ error: "update function is broken" });
+    return res.status(500).json({ error: "update function is broken" });
   }
 
   try {
     await db.collection('posts').doc(postId).update({ counts:  admin.firestore.FieldValue.increment(1)});
   } catch (error) {
-    return res.json({ error: "increment function is broken" });
+    return res.status(500).json({ error: "increment function is broken" });
   }
 
   return res.status(201).json({ message: "comment successfully added"});
@@ -83,7 +83,7 @@ const updatePost = async (req, res) => {
     
     await docRef.update({ msg: req.body.msg, title: req.body.title });
   } catch (error) {
-    return res.json({ error: 'something went wrong' });
+    return res.status(500).json({ error: 'something went wrong' });
   }
 
   return res.status(201).json({ message: "post-body successfully edited"});
@@ -103,7 +103,7 @@ const updateComment = async (req, res) => {
       id = doc.id;
     });
   } catch (error) {
-    return res.json({ error: 'something went wrong' });
+    return res.status(500).json({ error: 'something went wrong' });
   }
   
   const idx = comments.findIndex(comment => {
@@ -118,7 +118,7 @@ const updateComment = async (req, res) => {
     await db.collection('comments').doc(id).update({ cmnts: comments });
     return res.status(201).json({ message: "comment successfully edited"});
   } catch (error) {
-    return res.json({ error: 'something went wrong svaing the comment' });
+    return res.status(500).json({ error: 'something went wrong svaing the comment' });
   }
 }
 
@@ -129,14 +129,14 @@ const deletePost = async (req, res) => {
   try {
     await docRef.delete();
   } catch (error) {
-    return res.json({ error: 'something went wrong' });
+    return res.status(500).json({ error: 'something went wrong' });
   }
 
   try {
     const docRef = await db.collection('comments').where('postId', '==', req.params.id).get();
     docRef.forEach(doc => doc.ref.delete());
   } catch (error) {
-    return res.json({ error: 'something went wrong deleteing comments' });
+    return res.status(500).json({ error: 'something went wrong deleteing comments' });
   }
 
   return res.status(201).json({ message: "post deleted successfully"});
@@ -154,7 +154,7 @@ const deleteComment = async (req, res) => {
       id = doc.id;
     });
   } catch (error) {
-    return res.json({ error: 'something went wrong' });
+    return res.status(500).json({ error: 'something went wrong' });
   }
 
   const idx = comments.findIndex(comment => {
@@ -168,13 +168,13 @@ const deleteComment = async (req, res) => {
   try {
     await db.collection('comments').doc(id).update({ cmnts: comments });
   } catch (error) {
-    return res.json({ error: 'something went wrong deleteing comments' });
+    return res.status(500).json({ error: 'something went wrong deleteing comments' });
   }
 
   try {
     await db.collection('posts').doc(req.params.id).update({ counts:  admin.firestore.FieldValue.increment(-1)});
   } catch (error) {
-    return res.json({ error: "increment function is broken" });
+    return res.status(500).json({ error: "increment function is broken" });
   }
 
   return res.status(201).json({ message: "comment deleted successfully"});
@@ -189,7 +189,7 @@ const upvote = async (req, res) => {
     });
     return res.status(204).json({ success: 'successfully upvoted the post' });
   } catch (error) {
-    return res.json({ error: 'something went wrong' });
+    return res.status(500).json({ error: 'something went wrong' });
   }
 }
 
@@ -202,7 +202,7 @@ const downvote = async (req, res) => {
     });
     return res.status(204).json({ success: 'successfully downvoted the post' });
   } catch (error) {
-    return res.json({ error: 'something went wrong' });
+    return res.status(500).json({ error: 'something went wrong' });
   }
 }
 

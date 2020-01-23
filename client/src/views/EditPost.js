@@ -1,19 +1,23 @@
 import React from 'react'
 import PostContext from '../store/postContext/PostContext';
 
-export default function EditPost({ match }) {
+export default function EditPost({ match, history }) {
+  console.log('EditPost')
   const id = match.params.id;
   return (
     <PostContext.Consumer>{ ({ posts, updatePost, removePost }) => {
       const idx = posts.findIndex(el => el.id === id );
-      const post = { ...posts[idx] };
+      const post = {
+        title: posts[idx].title,
+        msg: posts[idx].msg
+      };
       const updateHandler = event => {
         event.preventDefault();
         event.persist();
         post.title = event.target.elements[0].value;
         post.msg = event.target.elements[1].value;
         console.log(post);
-        updatePost(post);
+        updatePost({post, id});
       }
 
       const deletePost = () => removePost(id);
@@ -27,6 +31,7 @@ export default function EditPost({ match }) {
             <input type="submit" value="Save" className="nu-elevate-cta cta"/>
           </form>
           <button onClick={deletePost} className="cancel nu-elevate-cta">Delete Post</button>
+          <button className="sign-options cancel nu-elevate-cta" onClick={history.goBack}>Cancel</button>
         </div>
       )
     }}</PostContext.Consumer>

@@ -2,6 +2,8 @@ import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import './stylesheets/App.css';
 
+import ProtectedRoute from './components/ProtectedRoute';
+
 import UserState from './store/userContext/UserState';
 import PostState from './store/postContext/PostState';
 import CommentState from './store/commentContext/CommentState';
@@ -18,8 +20,7 @@ import NewPost from './views/NewPost';
 import EditComment from './views/EditComment';
 import EditPost from './views/EditPost';
 
-function App(){
-  
+const App = () => {
   return(
     <UserState>
       <PostState>
@@ -32,11 +33,11 @@ function App(){
               <Route path='/signup' exact component={Signup} />
               <Route path='/about' exact component={About} />
               <Route path='/:user' exact component={User} />
-              <Route path='/p/newpost' exact component={NewPost} />
+              <ProtectedRoute path='/p/newpost' exact component={NewPost} />
               <Route path='/p/:tag' exact component={TaggedPost} />
-              <Route path='/edit/post/:id/' exact component={EditPost} />
-              <Route path='/edit/comment/:id/:key' exact component={EditComment} />
               <Route path='/comments/:id' exact component={Comments} />
+              <ProtectedRoute path='/edit/post/:id/' exact component={EditPost} />
+              <ProtectedRoute path='/edit/comment/:id/:key' exact component={EditComment} />
             </Switch>
           </Router>
         </CommentState>

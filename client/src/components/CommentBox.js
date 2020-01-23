@@ -3,6 +3,8 @@ import React from 'react'
 import CommentContext from '../store/commentContext/CommentContext';
 
 export default function CommentBox({ id }) {
+  console.log(`CommentBox`);
+  
   return (
     <CommentContext.Consumer>{ ({ addNewComment }) => {
       const commentHandler = event => {
