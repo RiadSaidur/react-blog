@@ -21,7 +21,7 @@ const setComments = async (id, state) => {
     console.log(error);
   }
 }
-
+// works
 const addNewComment = async (content, state) => {
   const updates = state;
   try {
@@ -60,7 +60,7 @@ export const CommentReducer = async (state, action) => {
     case UPDATE_COMMENT:
       return await updateComment(action.content, state);
     case REMOVE_COMMENT:
-      return await removeComment(action.id, state);
+      return await removeComment(action.content, state);
     default:
       return state;
   }

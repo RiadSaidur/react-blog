@@ -15,8 +15,8 @@ function EditComment({ match, history }){
   } = useContext(CommentContext);
 
   useEffect(() => {
-    let temp = commentCollection.find(el => el.postId === id);
-    temp = temp.cmnts.find(el => el.key === commentKey)
+    let temp = commentCollection.cmnts.find(el => el.key === commentKey);
+    temp.postId = id;
     setComment(temp);
     // eslint-disable-next-line
   }, []);
@@ -24,7 +24,6 @@ function EditComment({ match, history }){
   const updateHandler = event => {
     event.preventDefault();
     event.persist();
-    comment.postId = id;
     comment.key = commentKey;
     comment.msg = event.target.elements[0].value;
     updateComment(comment);

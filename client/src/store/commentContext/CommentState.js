@@ -20,7 +20,7 @@ const CommentState = props => {
   const setComments = id => dispatch({ type: SET_COMMENTS , id});
   const addNewComment = content => dispatch({ type: ADD_NEW_COMMENT, content });
   const updateComment = content => dispatch ({ type: UPDATE_COMMENT, content });
-  const removeComment = id => dispatch({ type: REMOVE_COMMENT, id });
+  const removeComment = content => dispatch({ type: REMOVE_COMMENT, content });
 
   return (
     <CommentContext.Provider value={{

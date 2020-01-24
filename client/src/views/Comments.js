@@ -8,7 +8,6 @@ import {getSinglePost} from '../services/public'
 import '../stylesheets/Comments.css'
 
 import CommentContext from '../store/commentContext/CommentContext';
-import PostContext from '../store/postContext/PostContext';
 
 function Comments({ match }){
   const [newComment, setNewComment] = useState(false);
@@ -18,7 +17,6 @@ function Comments({ match }){
   const toggleBox = () => setNewComment(!newComment);
 
   const { commentCollection, setComments } = useContext(CommentContext);
-  const { posts } = useContext(PostContext);
 
   const getComments = async id => {
     await setComments(match.params.id);
