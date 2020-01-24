@@ -184,8 +184,8 @@ const upvote = async (req, res) => {
   try {
     await db.collection('posts').doc(req.params.id).update({
       likes: admin.firestore.FieldValue.increment(1),
-      upvotes: admin.firestore.FieldValue.arrayUnion(req.user.handle),
-      downvotes: admin.firestore.FieldValue.arrayRemove(req.user.handle)
+      upvote: admin.firestore.FieldValue.arrayUnion(req.user.handle),
+      downvote: admin.firestore.FieldValue.arrayRemove(req.user.handle)
     });
     return res.status(204).json({ success: 'successfully upvoted the post' });
   } catch (error) {
@@ -196,9 +196,9 @@ const upvote = async (req, res) => {
 const downvote = async (req, res) => {
   try {
     await db.collection('posts').doc(req.params.id).update({
-      unlikes: admin.firestore.FieldValue.increment(1),
-      downvotes: admin.firestore.FieldValue.arrayUnion(req.user.handle),
-      upvotes: admin.firestore.FieldValue.arrayRemove(req.user.handle)
+      likes: admin.firestore.FieldValue.increment(-1),
+      downvote: admin.firestore.FieldValue.arrayUnion(req.user.handle),
+      upvote: admin.firestore.FieldValue.arrayRemove(req.user.handle)
     });
     return res.status(204).json({ success: 'successfully downvoted the post' });
   } catch (error) {
