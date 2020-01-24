@@ -4,6 +4,7 @@ import {
 } from "../../utils/validators";
 
 import {
+  addAuthHeader,
   SIGNIN,
   SIGNUP
 } from '../../services/auth'
@@ -24,6 +25,7 @@ const restoreCreds = state => {
     // authenticate from server first
     updates.token = localStorage.idToken;
     updates.isAuth = true;
+    addAuthHeader(updates.token);
     console.log('authenticate from server first');
   }
   return {...updates};
@@ -82,7 +84,7 @@ const signIn = async ({ creds, history }, state) => {
 const signOut = state => {
   console.log('sign out');
   const updates = state;
-  localStorage.removeItem('idToken', updates.token);
+  localStorage.removeItem('idToken');
   updates.isAuth = false;
   updates.token = '';
   return {...updates};
