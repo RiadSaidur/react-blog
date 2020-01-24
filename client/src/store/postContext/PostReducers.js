@@ -1,4 +1,8 @@
-import { getAllPosts } from '../../services/public'
+import {
+  getAllPosts,
+  getUserPost,
+  getFilteredPost
+} from '../../services/public'
 
 import {
   addPostToDB,
@@ -9,57 +13,74 @@ import {
 } from '../../services/protected'
 
 export const SET_POSTS = 'SET_POSTS';
+export const SET_POSTS_BY_USER = 'SET_POSTS_BY_USER';
+export const SET_POSTS_BY_TAG = 'SET_POSTS_BY_TAG';
 export const UPVOTE = 'UPVOTE';
 export const DOWNVOTE = 'DOWNVOTE';
 export const ADD_NEW_POST = 'ADD_NEW_POST';
 export const UPDATE_POST = 'UPDATE_POST'
 export const REMOVE_POST = 'REMOVE_POST';
-
+// works
 const setPosts = async state => {
   const response = await getAllPosts();
   if(response.status >= 200 && response.status < 300) return response.data;
   else console.log(response.error);
   return state;
 }
-
+// works
+const setPostsByUser = async (user, state) => {
+  const response = await getUserPost(user);
+  if(response.status >= 200 && response.status < 300) return response.data;
+  else console.log(response.error);
+  return state;
+}
+// works
+const setPostsByTag = async (tag, state) => {
+  const response = await getFilteredPost(tag);
+  if(response.status >= 200 && response.status < 300) return response.data;
+  else console.log(response.error);
+  return state;
+}
+// works
 const upvote = async (post, state) => {
   let updates = state;
-  if(post.upvotes.includes('boomer')) return [...updates];
+  if(post.upvote.includes('boomer')) return state;
   
   await upvotePostOnDB(post.id);
-
+  console.log('after call');
   post.likes++;
-  post.upvotes.push('boomer');
-  post.downvotes.splice(post.downvotes.indexOf('boomer'),1);
+  post.upvote.push('boomer');
+  post.downvote.splice(post.downvote.indexOf('boomer'),1);
   
   return [...updates];
 }
 
 const downvote = async (post, state) => {
   let updates = state;
-  if(post.downvotes.includes('boomer')) return [...updates];
+  if(post.downvote.includes('boomer')) return state;
 
   await downvotePostOnDB(post.id);
 
   post.likes--;
-  post.downvotes.push('boomer');
-  post.upvotes.splice(post.upvotes.indexOf('boomer'),1);
+  post.downvote.push('boomer');
+  post.upvote.splice(post.upvote.indexOf('boomer'),1);
   
   return [...updates];
 }
-
+// works
 const addNewPost = async (post, state) => {
-  await addPostToDB(post);
-  console.log(post);
+  const response = await addPostToDB(post);
+  if(response.status === 200) console.log(response.data);
+  else console.log(response.error);
   return state;
 }
-
+// works
 const updatePost = async (content, state) => {
   await updatePostToDB(content.post, content.id);
   console.log(content);
   return state;
 }
-
+// works
 const removePost = async (id, state) => {
   await deletePostFromDB(id);
   console.log(id);
@@ -70,6 +91,10 @@ export const postReducer = (state, action) => {
   switch(action.type) {
     case SET_POSTS:
       return setPosts(state);
+    case SET_POSTS_BY_USER:
+      return setPostsByUser(action.user, state);
+    case SET_POSTS_BY_TAG:
+      return setPostsByTag(action.tag, state);
     case UPVOTE:
       return upvote(action.key, state);
     case DOWNVOTE:
