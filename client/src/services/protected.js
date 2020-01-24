@@ -1,32 +1,34 @@
 import api from './api'
 
-const config = {
-  headers: {
-    Authorization: `Bearer ${localStorage.idToken}`
-  }
-};
-
 export const addPostToDB = async (post) => {
   console.log(`okay`);
-  const response = await api.post('/protected/post', post, config);
+  const response = await api.post('/protected/post', post);
+  if(response.status === 200) return {
+    data: response.data,
+    status: response.status
+  }
+  else return {
+    error: response.data.error,
+    status: response.status
+  }
   console.log(response);
 }
 
 export const updatePostToDB = async (post, id) => {
   console.log(`okay`);
-  const response = await api.patch(`protected/post/${id}`, post, config);
+  const response = await api.patch(`protected/post/${id}`, post);
   console.log(response);
 }
 
 export const deletePostFromDB = async (id) => {
   console.log(`okay`);
-  const response = await api.delete(`protected/post/${id}`, config);
+  const response = await api.delete(`protected/post/${id}`);
   console.log(response);
 }
 
 export const addCommentToDB = async (post, id) => {
   console.log(`okay`);
-  const response = await api.post(`protected/comment/${id}`, post, config);
+  const response = await api.post(`protected/comment/${id}`, post);
   console.log(response);
   if(response.status >= 200 && response.status < 300) return {
     data: response.data,
@@ -40,7 +42,7 @@ export const addCommentToDB = async (post, id) => {
 
 export const updateCommentToDB = async (comment, id, key) => {
   console.log(`okay`);
-  const response = await api.patch(`protected/comment/${id}/${key}`, comment, config);
+  const response = await api.patch(`protected/comment/${id}/${key}`, comment);
   console.log(response);
   if(response.status >= 200 && response.status < 300) return {
     data: response.data,
@@ -54,7 +56,7 @@ export const updateCommentToDB = async (comment, id, key) => {
 
 export const deleteCommentFromDB = async (id, key) => {
   console.log(`okay`);
-  const response = await api.delete(`protected/comment/${id}/${key}`, config);
+  const response = await api.delete(`protected/comment/${id}/${key}`);
   console.log(response);
   if(response.status >= 200 && response.status < 300) return {
     data: response.data,
@@ -67,7 +69,7 @@ export const deleteCommentFromDB = async (id, key) => {
 }
 
 export const upvotePostOnDB = async (id) => {
-  const response = await api.patch(`protected/upvote/${id}`, config);
+  const response = await api.patch(`protected/upvote/${id}`);
   console.log(response);
   if(response.status >= 200 && response.status < 300) return {
     data: response.data,
@@ -80,7 +82,7 @@ export const upvotePostOnDB = async (id) => {
 }
 
 export const downvotePostOnDB = async (id) => {
-  const response = await api.patch(`protected/downvote/${id}`, config);
+  const response = await api.patch(`protected/downvote/${id}`);
   console.log(response);
   if(response.status >= 200 && response.status < 300) return {
     data: response.data,

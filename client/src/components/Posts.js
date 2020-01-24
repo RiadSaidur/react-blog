@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import '../stylesheets/Posts.css'
 
 const Posts = ({ posts, upvote, downvote }) => {
-  console.log('Posts', posts)
+  console.table(posts)
   return(
     <div className="posts">
       {
@@ -29,13 +29,13 @@ const Posts = ({ posts, upvote, downvote }) => {
                 <div className="post-footer-cta">
                   <button className="post-cta" onClick={() => upvote(post)}>
                     <img src={require('../assets/heart.png')} alt='Downvote' className={
-                      post.upvotes.includes("boomer") ? "vote-cta vote-cta-active" : "vote-cta"}/>
+                      post.upvote.includes("boomer") ? "vote-cta vote-cta-active" : "vote-cta"}/>
                   </button>
                   <button
                     onClick={() => downvote(post)}
                     className="post-cta"
                   ><img src={require('../assets/brokenheart.png')} alt='Downvote' className={
-                    post.downvotes.includes("boomer") ? "vote-cta vote-cta-active" : "vote-cta"}/>
+                    post.downvote.includes("boomer") ? "vote-cta vote-cta-active" : "vote-cta"}/>
                   </button>
                 </div>
               </div>
