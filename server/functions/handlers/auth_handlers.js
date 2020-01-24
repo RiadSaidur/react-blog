@@ -32,12 +32,13 @@ const signup = async (req, res) => {
     
     const credentials ={
       uid: data.user.uid,
-      handle: newUser.handle
+      handle: newUser.handle,
+      email: newUser.email
     }
 
     await db.collection('users').doc(newUser.handle).set(credentials);
 
-    return res.json({ idToken });
+    return res.json({ idToken, user: newUser.handle });
   } catch (error) {
     return res.json({ error: 'something went wrong siging up'} );
   }
@@ -49,7 +50,16 @@ const signin = async (req, res) => {
   try {
     const data = await firebase.auth().signInWithEmailAndPassword(req.body.email, req.body.password);
     const idToken = await data.user.getIdToken();
-    return res.json({ idToken });
+    let user;
+    try {
+      const docs = await db.collection('users').where('email', '==', req.body.email).get();
+      docs.forEach(doc => user = doc.id);
+      return res.json({ idToken, user });
+    } catch (error) {
+      return res.json({ error: 'something went uid'} );  
+    }
+
+    // return res.json({ idToken, user });
   } catch (error) {
     return res.json({ error: 'something went wrong siging in'} );
   }
