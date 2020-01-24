@@ -54,8 +54,8 @@ function Comments({ match }){
         {
           comments.map(comment => (
             <div className="comment post nu-elevate-card" key={comment.key}>
-              <Link to={`/${comment.user}`}>
-                <h4>{comment.user}</h4>
+              <Link to={`/${comment.author}`}>
+                <h4>{comment.author}</h4>
               </Link>
               <p>{comment.msg}</p>
               <p>{comment.date}</p>
