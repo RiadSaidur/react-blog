@@ -1,5 +1,9 @@
 .about-container, .description, .stack, .license, .license > p{
-  margin-top: 1rem;
+  margin: 1rem;
+}
+
+.about-container > h1 {
+  text-align: center;
 }
 
 .about-container a{

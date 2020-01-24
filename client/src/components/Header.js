@@ -11,7 +11,7 @@ import '../stylesheets/Header.css'
 const Header = () => {
   const { restoreCreds } = useContext(UserContext);
   useEffect(() => {
-    if(localStorage.idToken) restoreCreds();
+    if(localStorage.idToken && localStorage.userHandle) restoreCreds();
     // eslint-disable-next-line
   }, []);
   return (
@@ -19,8 +19,10 @@ const Header = () => {
       return(
         <div className='header'>
           <Link to='/'><h1>pixxelbook</h1></Link>
-          { !isAuth && <NavLinks /> }
-          { isAuth && <UserLinks /> }
+          <div className='header-list'>
+            { !isAuth && <NavLinks /> }
+            { isAuth && <UserLinks /> }
+          </div>
         </div>
       )
     }}</UserContext.Consumer>

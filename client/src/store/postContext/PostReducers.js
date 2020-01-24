@@ -24,21 +24,18 @@ export const REMOVE_POST = 'REMOVE_POST';
 const setPosts = async state => {
   const response = await getAllPosts();
   if(response.status >= 200 && response.status < 300) return response.data;
-  else console.log(response.error);
   return state;
 }
 // works
 const setPostsByUser = async (user, state) => {
   const response = await getUserPost(user);
   if(response.status >= 200 && response.status < 300) return response.data;
-  else console.log(response.error);
   return state;
 }
 // works
 const setPostsByTag = async (tag, state) => {
   const response = await getFilteredPost(tag);
   if(response.status >= 200 && response.status < 300) return response.data;
-  else console.log(response.error);
   return state;
 }
 // works
@@ -47,7 +44,6 @@ const upvote = async (post, state) => {
   if(post.upvote.includes('boomer')) return state;
   
   await upvotePostOnDB(post.id);
-  console.log('after call');
   post.likes++;
   post.upvote.push('boomer');
   post.downvote.splice(post.downvote.indexOf('boomer'),1);
@@ -69,21 +65,17 @@ const downvote = async (post, state) => {
 }
 // works
 const addNewPost = async (post, state) => {
-  const response = await addPostToDB(post);
-  if(response.status === 200) console.log(response.data);
-  else console.log(response.error);
+  await addPostToDB(post);
   return state;
 }
 // works
 const updatePost = async (content, state) => {
   await updatePostToDB(content.post, content.id);
-  console.log(content);
   return state;
 }
 // works
 const removePost = async (id, state) => {
   await deletePostFromDB(id);
-  console.log(id);
   return state;
 }
 

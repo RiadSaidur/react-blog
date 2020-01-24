@@ -33,7 +33,7 @@ function Comments({ match }){
   }, []);
 
   useEffect(() => {
-    if(!isLoading) {setCommentsToState(commentCollection.cmnts); console.log(post)}
+    if(!isLoading) setCommentsToState(commentCollection.cmnts)
     // eslint-disable-next-line
   }, [isLoading]);  
 

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import UserContext from '../store/userContext/UserContext';
 
 const UserLinks = () => {
-  console.log('UserLinks')
   return (
     <UserContext.Consumer>{ ({ signOut }) => {
       return (

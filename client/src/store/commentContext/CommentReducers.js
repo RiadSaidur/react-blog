@@ -15,39 +15,28 @@ const setComments = async (id, state) => {
   try {
     const response = await getComments(id);
     if(response.status >= 200 && response.status < 300) return response.data[0];
-    else console.log(response.error);
     return state;
   } catch (error) {
-    console.log(error);
   }
 }
 // works
 const addNewComment = async (content, state) => {
   const updates = state;
   try {
-    const response = await addCommentToDB({ msg: content.comment }, content.postId);
-    if(response.status >= 200 && response.status < 300) console.log(response.data);
-    else console.log(response.error);
+    await addCommentToDB({ msg: content.comment }, content.postId);
   } catch (error) {
-    console.log(error);
   } finally {
     return updates;
   }
 }
 
 const updateComment = async (content, state) => {
-  const response = await updateCommentToDB({ msg: content.msg }, content.postId, content.key);
-  if(response.status >= 200 && response.status < 300) console.log(response.data);
-  else console.log(response.error);
-  console.log(typeof state)
+  await updateCommentToDB({ msg: content.msg }, content.postId, content.key);
   return state;
 }
 
 const removeComment = async (content, state) => {
-  const response = await deleteCommentFromDB(content.postId, content.key);
-  if(response.status >= 200 && response.status < 300) console.log(response.data);
-  else console.log(response.error);
-  console.log(typeof state)
+  await deleteCommentFromDB(content.postId, content.key);
   return state;
 }
 

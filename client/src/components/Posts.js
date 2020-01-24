@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import '../stylesheets/Posts.css'
 
+import UserContext from '../store/userContext/UserContext'
+
 const Posts = ({ posts, upvote, downvote }) => {
-  console.table(posts)
+  const { user: { isAuth, userHandle } } = useContext(UserContext);
   return(
     <div className="posts">
       {
@@ -25,17 +27,30 @@ const Posts = ({ posts, upvote, downvote }) => {
                 ))}
               </div>
               <div className="post-footer">
-                <p>{post.likes}</p>
+                <div className='counts'>
+                  <div className='counts like-count'>
+                    <img src={require('../assets/stocks.png')} alt='comments' />
+                    <p>{post.likes}</p>
+                  </div>
+                  <div className='counts comment-count'>
+                    <img src={require('../assets/quotation.png')} alt='comments' />
+                    <p>{post.counts}</p>
+                  </div>
+                </div>
                 <div className="post-footer-cta">
-                  <button className="post-cta" onClick={() => upvote(post)}>
-                    <img src={require('../assets/heart.png')} alt='Downvote' className={
-                      post.upvote.includes("boomer") ? "vote-cta vote-cta-active" : "vote-cta"}/>
+                  <button
+                    disabled={!isAuth}
+                    onClick={() => upvote(post)}
+                    className="post-cta"
+                  ><img src={require('../assets/up_arrow_black.png')} alt='Downvote' className={
+                      post.upvote.includes(userHandle) ? "vote-cta vote-cta-active" : "vote-cta"}/>
                   </button>
                   <button
+                    disabled={!isAuth}
                     onClick={() => downvote(post)}
                     className="post-cta"
-                  ><img src={require('../assets/brokenheart.png')} alt='Downvote' className={
-                    post.downvote.includes("boomer") ? "vote-cta vote-cta-active" : "vote-cta"}/>
+                  ><img src={require('../assets/down_arrow_black.png')} alt='Downvote' className={
+                    post.downvote.includes(userHandle) ? "vote-cta vote-cta-active" : "vote-cta"}/>
                   </button>
                 </div>
               </div>

@@ -16,9 +16,11 @@ function Home(){
 
   return(
     <div className='container'>
-      <button className='newpost-cta nu-elevate-cta'>
-        <Link to='/p/newpost'><img src={require('../assets/feather-blue-book.svg')} alt="+ New Post"></img></Link>
-      </button>
+      <Link to='/p/newpost'>
+        <button className='newpost-cta nu-elevate-cta'>
+          <img src={require('../assets/feather-blue-book.svg')} alt="+ New Post"></img>
+        </button>
+      </Link>
       <Posts posts={posts} upvote={upvote} downvote={downvote}/>
     </div>
   )

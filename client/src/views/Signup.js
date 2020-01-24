@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import UserContext from '../store/userContext/UserContext';
 
 function Signin({ history }){
-  console.log('Signup')
   return(
     <UserContext.Consumer>{ ({ signUp, restoreCreds }) => {
       const formHandler = event => {

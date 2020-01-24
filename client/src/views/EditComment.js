@@ -2,8 +2,6 @@ import React, { useContext, useState, useEffect } from "react";
 import CommentContext from "../store/commentContext/CommentContext";
 
 function EditComment({ match, history }){
-  console.log('EditComments')
-
   const id = match.params.id;
   const commentKey = parseFloat(match.params.key);
   const [comment, setComment] = useState({});

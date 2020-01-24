@@ -14,8 +14,9 @@ export const SIGN_UP = 'SIGN_UP';
 export const SIGN_IN = 'SIGN_IN';
 export const SIGN_OUT = 'SIGN_OUT';
 
-const saveCreds = (token, history) => {
+const saveCreds = (token, userHandle, history) => {
   localStorage.setItem('idToken', token);
+  localStorage.setItem('userHandle', userHandle);
   history.push('/');
 }
 
@@ -25,8 +26,8 @@ const restoreCreds = state => {
     // authenticate from server first
     updates.token = localStorage.idToken;
     updates.isAuth = true;
+    updates.userHandle = localStorage.userHandle;
     addAuthHeader(updates.token);
-    console.log('authenticate from server first');
   }
   return {...updates};
 }
@@ -44,16 +45,16 @@ const signUp = async ({ creds, history }, state) => {
   updates.errors = signUpValidator(userCreds);
   
   if(updates.errors.length){
-    console.log(updates.errors);
     return {...updates};
   }
 
-  updates.token = await SIGNUP(userCreds);
+  const response = await SIGNUP(userCreds);
+  updates.token = response.idToken;
+  updates.userHandle = response.user;
   
-  saveCreds(updates.token, history);
+  saveCreds(updates.token, updates.userHandle, history);
   
   updates.isAuth = true;
-  console.log(updates);
   return {...updates};
 }
 
@@ -68,23 +69,23 @@ const signIn = async ({ creds, history }, state) => {
   updates.errors = signInValidator(userCreds);
   
   if(updates.errors.length){
-    console.log(updates.errors);
     return {...updates};
   }
 
-  updates.token = await SIGNIN(userCreds);
+  const response = await SIGNIN(userCreds); 
+  updates.token = response.idToken;
+  updates.userHandle = response.user;
   
-  saveCreds(updates.token, history);
+  saveCreds(updates.token, updates.userHandle, history);
 
   updates.isAuth = true;
-  console.log(updates);
   return {...updates};
 }
 
 const signOut = state => {
-  console.log('sign out');
   const updates = state;
   localStorage.removeItem('idToken');
+  localStorage.removeItem('userHandle');
   updates.isAuth = false;
   updates.token = '';
   return {...updates};

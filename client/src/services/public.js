@@ -3,7 +3,6 @@ import api from './api'
 export const getAllPosts = async () => {
   try {
     const response = await api.get('/public');
-    console.log(response);
     if(response.status >= 200 && response.status < 300) return {
       data: response.data,
       status: response.status
@@ -13,14 +12,12 @@ export const getAllPosts = async () => {
       status: response.status
     }
   } catch (error) {
-    console.log(error);
   }
 }
 // works
 export const getSinglePost = async id => {
   try {
     const response = await api.get(`/public/${id}`);
-    console.log(response);
     if(response.status >= 200 && response.status < 300) return {
       data: {
         msg: response.data.msg,
@@ -33,7 +30,6 @@ export const getSinglePost = async id => {
       status: response.status
     }
   } catch (error) {
-    console.log(error);
   }
 }
 // works
@@ -49,14 +45,12 @@ export const getComments = async id => {
       status: response.status
     }
   } catch (error) {
-    console.log(error);
   }
 }
 
 export const getFilteredPost = async tag => {
   try {
     const response = await api.get(`/public/filter/${tag}`);
-    console.log(response);
     if(response.status >= 200 && response.status < 300) return {
       data: response.data,
       status: response.status
@@ -66,14 +60,12 @@ export const getFilteredPost = async tag => {
       status: response.status
     }
   } catch (error) {
-    console.log(error);
   }
 }
 
 export const getUserPost = async user => {
   try {
     const response = await api.get(`/public/user/${user}`);
-    console.log(response);
     if(response.status >= 200 && response.status < 300) return {
       data: response.data,
       status: response.status
@@ -83,6 +75,5 @@ export const getUserPost = async user => {
       status: response.status
     }
   } catch (error) {
-    console.log(error);
   }
 }

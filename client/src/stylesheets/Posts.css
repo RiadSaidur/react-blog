@@ -4,7 +4,7 @@
 }
 
 .post{
-  margin-bottom: 1rem;
+  margin: 1rem;
   padding: 1rem;
   border-radius: 20px;
   cursor: pointer;
@@ -42,10 +42,30 @@
   padding: .5rem 0;
 }
 
+.counts{
+  display: flex;
+  flex-direction: row;
+  margin-right: 1rem;
+}
+
+.counts img{
+  margin-right: .5rem;
+}
+
+.like-count > img {
+  width: 25px;
+}
+
+.comment-count > img{
+  width: 12px;
+}
+
 .vote-cta{
   height: 30px;
+  color: lightcoral;
 }
 
 .vote-cta-active{
   filter: opacity(.5) drop-shadow(0 0 0 red);
+  border-bottom: 1px solid red;
 }

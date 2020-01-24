@@ -16,7 +16,7 @@ const UserState = props => {
   const user = {
     isAuth: false,
     token: '',
-    userHandle: 'saidur',
+    userHandle: '',
     errors: []
   };
 

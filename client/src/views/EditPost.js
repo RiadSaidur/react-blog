@@ -2,7 +2,6 @@ import React from 'react'
 import PostContext from '../store/postContext/PostContext';
 
 export default function EditPost({ match, history }) {
-  console.log('EditPost')
   const id = match.params.id;
   return (
     <PostContext.Consumer>{ ({ posts, updatePost, removePost }) => {
@@ -16,7 +15,6 @@ export default function EditPost({ match, history }) {
         event.persist();
         post.title = event.target.elements[0].value;
         post.msg = event.target.elements[1].value;
-        console.log(post);
         updatePost({post, id});
       }
 

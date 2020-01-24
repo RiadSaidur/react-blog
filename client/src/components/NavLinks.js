@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const NavLinks = () => {
-  console.log('NavLinks')
   return (
     <div>
       <ul className='nav-links'>

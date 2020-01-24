@@ -5,7 +5,6 @@ import '../stylesheets/Signin.css'
 import UserContext from '../store/userContext/UserContext';
 
 function Signin({ history }){
-  console.log('Signin')
   return(
     <UserContext.Consumer>{ ({ signIn }) => {
       const formHandler = async event => {
