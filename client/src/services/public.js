@@ -1,5 +1,5 @@
 import api from './api'
-
+//  works
 export const getAllPosts = async () => {
   try {
     const response = await api.get('/public');
@@ -16,7 +16,7 @@ export const getAllPosts = async () => {
     console.log(error);
   }
 }
-
+// works
 export const getSinglePost = async id => {
   try {
     const response = await api.get(`/public/${id}`);
@@ -36,7 +36,7 @@ export const getSinglePost = async id => {
     console.log(error);
   }
 }
-
+// works
 export const getComments = async id => {
   try {
     const response = await api.get(`/public/comments/${id}`);
@@ -55,8 +55,16 @@ export const getComments = async id => {
 
 export const getFilteredPost = async tag => {
   try {
-    const response = await api.get(`public/filter/${tag}`);
-    console.log(response.data);
+    const response = await api.get(`/public/filter/${tag}`);
+    console.log(response);
+    if(response.status >= 200 && response.status < 300) return {
+      data: response.data,
+      status: response.status
+    }
+    else return {
+      error: response.data.error,
+      status: response.status
+    }
   } catch (error) {
     console.log(error);
   }
@@ -64,8 +72,16 @@ export const getFilteredPost = async tag => {
 
 export const getUserPost = async user => {
   try {
-    const response = await api.get(`public/user/${user}`);
-    console.log(response.data);
+    const response = await api.get(`/public/user/${user}`);
+    console.log(response);
+    if(response.status >= 200 && response.status < 300) return {
+      data: response.data,
+      status: response.status
+    }
+    else return {
+      error: response.data.error,
+      status: response.status
+    }
   } catch (error) {
     console.log(error);
   }
