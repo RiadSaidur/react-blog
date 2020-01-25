@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import PostContext from '../store/postContext/PostContext';
 
 function NewPost({ history }){
-  const [postStatus, setPostStatus] = useState('Post');
+  const [postStatus, setPostStatus] = useState(false);
 
   const { addNewPost } = useContext(PostContext);
 
@@ -14,9 +14,9 @@ function NewPost({ history }){
       msg: event.target.elements[1].value,
       tags: [`boom`]
     }
-    setPostStatus('Posting');
-    await addNewPost(post);
-    setPostStatus('Post');
+    setPostStatus(true);
+    await addNewPost(post, history);
+    setPostStatus(false);
   };
   return(
     <div className="nu-elevate-card sign-container contents">
@@ -24,7 +24,12 @@ function NewPost({ history }){
       <form onSubmit={newPost} className="form">
         <input type="text" placeholder="Title" className="nu-elevate-cta"/>
         <textarea placeholder="Post" rows="5" className="nu-elevate-cta"></textarea>
-        <input type="submit" value={postStatus} className="nu-elevate-cta cta"/>
+        <input 
+          disabled={postStatus}
+          type="submit" 
+          value={postStatus ? 'Posting ...' : 'Post'} 
+          className="nu-elevate-cta cta"
+        />
       </form>
       <button className="sign-options cancel nu-elevate-cta" onClick={history.goBack}>Cancel</button>
     </div>

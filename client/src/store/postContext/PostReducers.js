@@ -64,8 +64,9 @@ const downvote = async (post, state) => {
   return [...updates];
 }
 // works
-const addNewPost = async (post, state) => {
-  await addPostToDB(post);
+const addNewPost = async (post, history, state) => {
+  const response = await addPostToDB(post);
+  if(response.status === 200) history.push('/');
   return state;
 }
 // works
@@ -92,7 +93,7 @@ export const postReducer = (state, action) => {
     case DOWNVOTE:
       return downvote(action.key, state);
     case ADD_NEW_POST:
-      return addNewPost(action.post, state);
+      return addNewPost(action.post, action.history, state);
     case UPDATE_POST:
       return updatePost(action.content, state);
     case REMOVE_POST:
