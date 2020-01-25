@@ -9,6 +9,7 @@ import {
   SIGNUP
 } from '../../services/auth'
 
+export const CLEAR_ERROR = 'CLEAR_ERROR';
 export const RESTORE_CREDS = 'RESTORE_CREDS';
 export const SIGN_UP = 'SIGN_UP';
 export const SIGN_IN = 'SIGN_IN';
@@ -18,6 +19,14 @@ const saveCreds = (token, userHandle, history) => {
   localStorage.setItem('idToken', token);
   localStorage.setItem('userHandle', userHandle);
   history.push('/');
+}
+
+const clearError = (idx, state) => {
+  const updates = state;
+  
+  updates.errors.splice(idx, 1);
+
+  return {...updates};
 }
 
 const restoreCreds = state => {
@@ -93,6 +102,8 @@ const signOut = state => {
 
 export const UserReducer = async (state, action) => {
   switch(action.type) {
+    case CLEAR_ERROR:
+      return clearError(action.idx, state);
     case RESTORE_CREDS:
       return restoreCreds(state);
     case SIGN_UP:

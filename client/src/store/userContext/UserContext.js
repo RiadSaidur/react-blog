@@ -5,6 +5,7 @@ export default React.createContext({
   token: '',
   userHandle: '',
   errors: [],
+  clearError: idx => {},
   restoreCreds: () => {},
   signUp: creds => {},
   signIn: creds => {},

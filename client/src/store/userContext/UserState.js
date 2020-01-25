@@ -4,6 +4,7 @@ import UserContext from './UserContext';
 
 import {
   UserReducer,
+  CLEAR_ERROR,
   RESTORE_CREDS,
   SIGN_UP,
   SIGN_IN,
@@ -22,6 +23,7 @@ const UserState = props => {
 
   const [ userState, dispatch ] = useAsyncReducer(UserReducer, user);
 
+  const clearError = idx => dispatch({ type: CLEAR_ERROR, idx });
   const restoreCreds = () => dispatch({ type: RESTORE_CREDS });
   const signUp = payload => dispatch({ type: SIGN_UP, payload });
   const signIn = payload => dispatch({ type: SIGN_IN, payload });
@@ -30,6 +32,7 @@ const UserState = props => {
   return (
     <UserContext.Provider value={{
       user: userState,
+      clearError,
       restoreCreds,
       signUp,
       signIn,
