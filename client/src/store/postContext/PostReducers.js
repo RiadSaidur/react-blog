@@ -39,27 +39,28 @@ const setPostsByTag = async (tag, state) => {
   return state;
 }
 // works
-const upvote = async (post, state) => {
+const upvote = async (post, user, state) => {
   let updates = state;
-  if(post.upvote.includes('boomer')) return state;
+  if(post.upvote.includes(user)) return state;
   
-  await upvotePostOnDB(post.id);
   post.likes++;
-  post.upvote.push('boomer');
-  post.downvote.splice(post.downvote.indexOf('boomer'),1);
-  
+  post.upvote.push(user);
+  post.downvote.splice(post.downvote.indexOf(user),1);
+
+  await upvotePostOnDB(post.id);
+
   return [...updates];
 }
 
-const downvote = async (post, state) => {
+const downvote = async (post, user, state) => {
   let updates = state;
-  if(post.downvote.includes('boomer')) return state;
-
-  await downvotePostOnDB(post.id);
+  if(post.downvote.includes(user)) return state;
 
   post.likes--;
-  post.downvote.push('boomer');
-  post.upvote.splice(post.upvote.indexOf('boomer'),1);
+  post.downvote.push(user);
+  post.upvote.splice(post.upvote.indexOf(user),1);
+
+  await downvotePostOnDB(post.id);
   
   return [...updates];
 }
@@ -89,9 +90,9 @@ export const postReducer = (state, action) => {
     case SET_POSTS_BY_TAG:
       return setPostsByTag(action.tag, state);
     case UPVOTE:
-      return upvote(action.key, state);
+      return upvote(action.key, action.user, state);
     case DOWNVOTE:
-      return downvote(action.key, state);
+      return downvote(action.key, action.user, state);
     case ADD_NEW_POST:
       return addNewPost(action.post, action.history, state);
     case UPDATE_POST:

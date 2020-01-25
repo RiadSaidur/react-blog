@@ -24,8 +24,8 @@ const PostState = props => {
   const setPosts = () => dispatch({ type: SET_POSTS });
   const setPostsByUser = user => dispatch({ type: SET_POSTS_BY_USER, user });
   const setPostsByTag = tag => dispatch({ type: SET_POSTS_BY_TAG, tag });
-  const upvote = key => dispatch({ type: UPVOTE, key });
-  const downvote = key => dispatch({ type: DOWNVOTE, key });
+  const upvote = (key, user) => dispatch({ type: UPVOTE, key, user });
+  const downvote = (key, user) => dispatch({ type: DOWNVOTE, key, user });
   const addNewPost = (post, history) => dispatch({ type: ADD_NEW_POST, post, history });
   const updatePost = content => dispatch ({ type: UPDATE_POST, content });
   const removePost = id => dispatch({ type: REMOVE_POST, id });
