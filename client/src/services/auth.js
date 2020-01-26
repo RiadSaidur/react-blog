@@ -7,9 +7,23 @@ export const addAuthHeader = token => {
 export const SIGNIN = async creds => {
   try {
     const resposne = await api.post('/auth/signin', creds);
+    if(resposne.status === 404) return {
+      status: resposne.status
+    }
+
+    if(resposne.status === 500) return {
+      status: resposne.status
+    }
+
     addAuthHeader(resposne.data.idToken);
-    return resposne.data;
+    
+    return {
+      status: resposne.status,
+      data: resposne.data
+    }
   } catch (error) {
+    Promise.reject(error.response).catch(err => {})
+    return { status: error.response.status }
   }
 }
 
@@ -19,5 +33,7 @@ export const SIGNUP = async creds => {
     addAuthHeader(resposne.data.idToken);
     return resposne.data;
   } catch (error) {
+    Promise.reject(error.response).catch(err => {})
+    return { status: error.response.status }
   }
 }

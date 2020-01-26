@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import '../stylesheets/Signin.css'
@@ -6,8 +6,6 @@ import UserContext from '../store/userContext/UserContext';
 import Errors from '../components/Errors';
 
 function Signin({ history }){
-  const unmountingRef = useRef(false);
-
   const [signStatus, setSignStatus] = useState(false)
 
   const { signIn } = useContext(UserContext);
@@ -19,15 +17,12 @@ function Signin({ history }){
       email: event.target.elements[0].value,
       password: event.target.elements[1].value
     }
+    event.target.elements[1].value = ''
     const payload = { creds, history };
     setSignStatus(true);
     await signIn(payload);
-    if(!unmountingRef) setSignStatus(false);
+    setSignStatus(false);
   };
-
-  useEffect(() => {
-    return() => unmountingRef.current = true;
-  })
 
   return (
     <div className="sign-container">

@@ -10,7 +10,7 @@ const {
 } = require('../validators/authdata');
 
 const signup = async (req, res) => {
-  if(!signupValidator(req.body)) return res.json({ error: 'invalid form data'} );
+  if(!signupValidator(req.body)) return res.status(400).json({ error: 'invalid form data'} );
 
   const newUser = {
     email: req.body.email,
@@ -21,9 +21,9 @@ const signup = async (req, res) => {
 
   try {
     const doc = await db.collection('users').doc(newUser.handle).get();
-    if(doc.exists) return res.json({ error: 'handle is already taken' });
+    if(doc.exists) return res.status(406).json({ error: 'handle is already taken' });
   } catch (error) {
-    return res.json({ error: 'something went wrong'} );
+    return res.status(500).json({ error: 'something went wrong'} );
   }
 
   try {
@@ -38,14 +38,14 @@ const signup = async (req, res) => {
 
     await db.collection('users').doc(newUser.handle).set(credentials);
 
-    return res.json({ idToken, user: newUser.handle });
+    return res.status(200).json({ idToken, user: newUser.handle });
   } catch (error) {
-    return res.json({ error: 'something went wrong siging up'} );
+    return res.status(409).json({ error: 'email already taken'} );
   }
 }
 
 const signin = async (req, res) => {
-  if(!signinValidator(req.body)) return res.json({ error: 'invalid form data'} );
+  if(!signinValidator(req.body)) return res.status(400).json({ error: 'invalid form data'} );
 
   try {
     const data = await firebase.auth().signInWithEmailAndPassword(req.body.email, req.body.password);
@@ -54,14 +54,14 @@ const signin = async (req, res) => {
     try {
       const docs = await db.collection('users').where('email', '==', req.body.email).get();
       docs.forEach(doc => user = doc.id);
-      return res.json({ idToken, user });
+      return res.status(200).json({ idToken, user });
     } catch (error) {
-      return res.json({ error: 'something went uid'} );  
+      return res.status(500).json({ error: 'something went wrong getting uid'} );  
     }
 
     // return res.json({ idToken, user });
   } catch (error) {
-    return res.json({ error: 'something went wrong siging in'} );
+    return res.status(404).json({ error: 'invalid email/password'} );
   }
 }
 
