@@ -50,7 +50,7 @@ function Comments({ match }){
           </div> : <p>{post.error}</p>
         }
         <button className='nu-elevate-cta cta newcomment' onClick={toggleBox}>+ Comment</button>
-        {newComment && <CommentBox id={match.params.id} />}
+        {newComment && <CommentBox id={match.params.id} setNewComment={setNewComment} />}
         <div className="comments">
           {
             comments.map(comment => (
