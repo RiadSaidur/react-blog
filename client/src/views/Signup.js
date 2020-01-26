@@ -17,6 +17,8 @@ function Signin({ history }){
       password: event.target.elements[2].value,
       repeatPassword: event.target.elements[3].value
     }
+    event.target.elements[2].value = ''
+    event.target.elements[3].value = ''
     const payload = { creds, history };
     setSignStatus(true);
     await signUp(payload);
