@@ -1,3 +1,5 @@
+import { isEmpty } from '../../utils/validators';
+
 import {
   getAllPosts,
   getUserPost,
@@ -12,6 +14,7 @@ import {
   downvotePostOnDB
 } from '../../services/protected'
 
+export const CLEAR_ERROR = 'CLEAR_ERROR';
 export const SET_POSTS = 'SET_POSTS';
 export const SET_POSTS_BY_USER = 'SET_POSTS_BY_USER';
 export const SET_POSTS_BY_TAG = 'SET_POSTS_BY_TAG';
@@ -20,23 +23,34 @@ export const DOWNVOTE = 'DOWNVOTE';
 export const ADD_NEW_POST = 'ADD_NEW_POST';
 export const UPDATE_POST = 'UPDATE_POST'
 export const REMOVE_POST = 'REMOVE_POST';
+
+const clearError = (idx, state) => {
+  const updates = state;
+  
+  updates.errors.splice(idx, 1);
+
+  return {...updates};
+}
 // works
 const setPosts = async state => {
+  const updates = state;
   const response = await getAllPosts();
-  if(response.status >= 200 && response.status < 300) return response.data;
-  return state;
+  if(response.status >= 200 && response.status < 300) updates.postsCollections = response.data;
+  return {...updates};
 }
 // works
 const setPostsByUser = async (user, state) => {
+  const updates = state;
   const response = await getUserPost(user);
-  if(response.status >= 200 && response.status < 300) return response.data;
-  return state;
+  if(response.status >= 200 && response.status < 300) updates.postsCollections = response.data;
+  return {...updates};
 }
 // works
 const setPostsByTag = async (tag, state) => {
+  const updates = state;
   const response = await getFilteredPost(tag);
-  if(response.status >= 200 && response.status < 300) return response.data;
-  return state;
+  if(response.status >= 200 && response.status < 300) updates.postsCollections = response.data;
+  return {...updates};
 }
 // works
 const upvote = async (post, user, state) => {
@@ -66,13 +80,44 @@ const downvote = async (post, user, state) => {
 }
 // works
 const addNewPost = async (post, history, state) => {
+  let updates = state;
+  
+  if(isEmpty(post.msg) || isEmpty(post.title)){
+    updates.errors.push('Fields can not be empty');
+    console.log(updates.errors)
+    return {...updates};
+  }
+
   const response = await addPostToDB(post);
-  if(response.status === 200) history.push('/');
+
+  if(response?.errors) {
+    updates.errors = response.errors;
+    console.log(updates.errors)
+    return {...updates}
+  }
+  await setPosts(updates)
+  history.push('/')
   return state;
 }
 // works
 const updatePost = async (content, state) => {
-  await updatePostToDB(content.post, content.id);
+  let updates = state;
+
+  if(isEmpty(content.post.msg) || isEmpty(content.post.title)){
+    updates.errors.push('Fields can not be empty');
+    return {...updates};
+  }
+
+  const response = await updatePostToDB(content.post, content.id);
+
+  if(response?.errors) {
+    updates.errors = response.errors;
+    return {...updates}
+  }
+
+  await setPosts(updates)
+  content.history.push('/')
+
   return state;
 }
 // works
@@ -83,6 +128,8 @@ const removePost = async (id, state) => {
 
 export const postReducer = (state, action) => {
   switch(action.type) {
+    case CLEAR_ERROR:
+      return clearError(action.idx, state);
     case SET_POSTS:
       return setPosts(state);
     case SET_POSTS_BY_USER:

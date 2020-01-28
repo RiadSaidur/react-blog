@@ -22,8 +22,8 @@ function Comments({ match }){
 
   const getComments = async () => {
     setIsLoading(true)
-    await setComments(match.params.id)
     setPost(await getSinglePost(match.params.id))
+    if(!Object.keys(post).length) await setComments(match.params.id)
     setIsLoading(false)
   }
 

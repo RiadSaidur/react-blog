@@ -1,68 +1,59 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# src folder Structure
 
-## Available Scripts
+  src
+  |- assets
+  |- components
+  |- services
+  |- store
+  |- stylesheets
+  |- utils
+  |- views
 
-In the project directory, you can run:
+**all router views are listed in the views folder**
 
-### `npm start`
+  utils
+  |- validators
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**validator validates all form data**
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+  services
+  |- api **creates dafault axios connection**
+  |- auth **controls Sign In/Sign Up and authorizing users**
+  |- protected **handles access to protected appi endpoints**
+  |- public **handles access to public api endpoints**
 
-### `npm test`
+**services is responsible for all api calls**
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  store
+  |- userContext **stores all user states and errors**
+  |- postContext **stores all post states and errors**
+  |- commentContext **stores all comments states and errors**
 
-### `npm run build`
+**all shared data is handled via store and uses React Context API**
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# services
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+all of these methods are accessed from store reducers
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## api
 
-### `npm run eject`
+contains default axios connection
+all api calls returns some data and errors, if available
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## auth
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+contains **signIn**, **signUp** and **addAuthHeader** methods
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## protected
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+contains **addPostToDB**, **updatePostToDB**, **deletePostFromDB**, **upvotePostOnDB**, **downvotePostOnDB**
+         **addCommentToDB**, **updateCommentToDB**, **deleteCommentFromDB**
 
-## Learn More
+these methods are only valid with an access token
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## public
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+contains **getAllPosts**, **getSinglePost**, **getFilteredPost**, **getUserPost**, **downvotePostOnDB**
+         **getComments**
 
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+these methods can be accessed without access token

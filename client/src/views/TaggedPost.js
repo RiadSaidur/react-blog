@@ -4,7 +4,7 @@ import Posts from '../components/Posts';
 import PostContext from '../store/postContext/PostContext';
 
 export default function TaggedPost({ match }) {
-  const { posts, setPostsByTag, upvote, downvote } = useContext(PostContext);
+  const { posts: { postsCollections }, setPostsByTag, upvote, downvote } = useContext(PostContext);
 
   useEffect(() => {
     setPostsByTag(match.params.tag);
@@ -14,7 +14,7 @@ export default function TaggedPost({ match }) {
   return (
     <div className="tagged-container">
       <h2>p/{ match.params.tag }</h2>
-      <Posts posts={posts} upvote={upvote} downvote={downvote}/>
+      <Posts posts={postsCollections} upvote={upvote} downvote={downvote}/>
     </div>
   )
 }

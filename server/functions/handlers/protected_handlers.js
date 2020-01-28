@@ -6,7 +6,7 @@ const {
 } = require('../validators/postdata');
 
 const addNewPost = async (req, res) => {
-  if(!validatePost({title: req.body.title, msg: req.body.msg})) return res.json({ error: 'invalid form data'} );
+  if(!validatePost({title: req.body.title, msg: req.body.msg})) return res.status(400).json({ error: 'invalid form data'} );
 
   try {
     const post = {
@@ -71,7 +71,7 @@ const addNewComment = async (req, res) => {
 }
 
 const updatePost = async (req, res) => {
-  if(!validatePost({title: req.body.title, msg: req.body.msg})) return res.json({ error: 'invalid form data'} );
+  if(!validatePost({title: req.body.title, msg: req.body.msg})) return res.status(400).json({ error: 'invalid form data'} );
 
   const id = req.params.id;
 

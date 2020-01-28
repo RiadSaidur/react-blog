@@ -56,9 +56,11 @@ const Posts = ({ posts, upvote, downvote }) => {
                 </button>
               </div>
             </div>
-            <Link to={`/edit/post/${post.id}`}>
-              <button>Edit</button>
-            </Link>
+            {userHandle === post.author ?
+              <Link to={`/edit/post/${post.id}`}>
+                <button>Edit</button>
+              </Link> : ''
+            }
           </div>
         ))
       }

@@ -1,7 +1,11 @@
 import React from 'react'
 
 export default React.createContext({
-  posts: [],
+  posts: {
+    postsCollections: [],
+    errors: []
+  },
+  clearError: idx => {},
   setPosts: () => {},
   setPostsByUser: () => {},
   setPostsByTag: () => {},

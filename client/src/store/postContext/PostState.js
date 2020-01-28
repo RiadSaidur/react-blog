@@ -6,6 +6,7 @@ import useAsyncReducer from '../useAsyncReducer'
 
 import {
   postReducer,
+  CLEAR_ERROR,
   SET_POSTS,
   SET_POSTS_BY_USER,
   SET_POSTS_BY_TAG,
@@ -17,10 +18,14 @@ import {
 } from './PostReducers'
 
 const PostState = props => {
-  const posts = [];
+  const posts = {
+    postsCollections: [],
+    errors: []
+  };
 
   const [ postState, dispatch ] =  useAsyncReducer(postReducer, posts);
 
+  const clearError = idx => dispatch({ type: CLEAR_ERROR, idx });
   const setPosts = () => dispatch({ type: SET_POSTS });
   const setPostsByUser = user => dispatch({ type: SET_POSTS_BY_USER, user });
   const setPostsByTag = tag => dispatch({ type: SET_POSTS_BY_TAG, tag });
@@ -34,6 +39,7 @@ const PostState = props => {
     <PostContext.Provider
       value={{
         posts: postState,
+        clearError,
         setPosts,
         setPostsByUser,
         setPostsByTag,

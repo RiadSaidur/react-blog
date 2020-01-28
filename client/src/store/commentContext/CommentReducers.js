@@ -60,7 +60,6 @@ const updateComment = async (content, state) => {
 
   if(response?.errors) {
     updates.errors = response.errors;
-    console.log(response.errors)
     return {...updates}
   }
   
@@ -72,7 +71,7 @@ const removeComment = async (content, state) => {
 
   const response = await deleteCommentFromDB(content.postId, content.key);
 
-  if(response.status === 403) updates.errors.push('You can not edit this comment');
+  if(response.status === 403) updates.errors.push('Unauthorized access');
   if(response.status === 404) updates.errors.push('Content not found');
   if(response.status === 500) updates.errors.push('Internal server error. Please try again later');
 

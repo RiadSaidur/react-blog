@@ -7,7 +7,7 @@ import '../stylesheets/Home.css'
 import PostContext from '../store/postContext/PostContext';
 
 function Home(){
-  const { posts, setPosts, upvote, downvote } = useContext(PostContext);
+  const { posts: { postsCollections }, setPosts, upvote, downvote } = useContext(PostContext);
 
   useEffect(() => {
     setPosts();
@@ -21,7 +21,7 @@ function Home(){
           <img src={require('../assets/feather-blue-book.svg')} alt="+ New Post"></img>
         </button>
       </Link>
-      <Posts posts={posts} upvote={upvote} downvote={downvote}/>
+      <Posts posts={postsCollections} upvote={upvote} downvote={downvote}/>
     </div>
   )
 }

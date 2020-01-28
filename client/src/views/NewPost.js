@@ -1,10 +1,13 @@
 import React, { useState, useContext } from 'react';
+
+import Errors from '../components/Errors'
+
 import PostContext from '../store/postContext/PostContext';
 
 function NewPost({ history }){
   const [postStatus, setPostStatus] = useState(false);
 
-  const { addNewPost } = useContext(PostContext);
+  const { addNewPost, posts: { errors }, clearError } = useContext(PostContext);
 
   const newPost = async event => {
     event.persist();
@@ -21,6 +24,7 @@ function NewPost({ history }){
   return(
     <div className="nu-elevate-card sign-container contents">
       <h2>Add New Post</h2>
+      <Errors errors={errors} clearError={clearError} />
       <form onSubmit={newPost} className="form">
         <input type="text" placeholder="Title" className="nu-elevate-cta"/>
         <textarea placeholder="Post" rows="5" className="nu-elevate-cta"></textarea>
