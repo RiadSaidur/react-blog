@@ -1,11 +1,12 @@
 import React, { useState, useContext } from 'react'
 
 import CommentContext from '../store/commentContext/CommentContext';
+import Errors from './Errors';
 
 export default function CommentBox({ id, setNewComment }) {
-  const [commentStatus, setCommentStatus] = useState(false);
+  const [commentStatus, setCommentStatus] = useState(false)
 
-  const { addNewComment } = useContext(CommentContext)
+  const { addNewComment, clearError,  comments: { errors }, setComments } = useContext(CommentContext)
 
   const commentHandler = async event => {
     event.persist();
@@ -14,15 +15,16 @@ export default function CommentBox({ id, setNewComment }) {
       postId: id,
       comment: event.target.elements[0].value
     };
-    if(!content.comment.trim().length) return
     setCommentStatus(true)
-    await addNewComment(content)  
+    await addNewComment(content)
+    await setComments(id)
     setCommentStatus(false)
-    setNewComment(false)
+    if(!errors.length) setNewComment(false)
   }
 
   return (
     <div className="nu-elevate-card contents">
+      {errors ? <Errors errors={errors} clearError={clearError} /> : ''}
       <form onSubmit={commentHandler} className="form">
         <textarea rows="2" className="nu-elevate-cta"/>
         <input 

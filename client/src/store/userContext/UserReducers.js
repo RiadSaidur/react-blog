@@ -53,12 +53,13 @@ const signUp = async ({ creds, history }, state) => {
 
   updates.errors = signUpValidator(userCreds);
 
+  if(updates.errors.length){
+    return {...updates};
+  }
+
   const response = await SIGNUP(userCreds);
 
-  if(response.status === 400) updates.errors.push('Invalid Data. Please fill the forms properly');
-  if(response.status === 406) updates.errors.push('User Handle already taken');
-  if(response.status === 409) updates.errors.push('Email already exists');
-  if(response.status === 500) updates.errors.push('Internal server error. Please try again later');
+  updates.errors = response?.errors
   
   if(updates.errors.length){
     return {...updates};
@@ -82,6 +83,10 @@ const signIn = async ({ creds, history }, state) => {
   };
 
   updates.errors = signInValidator(userCreds);
+
+  if(updates.errors.length){
+    return {...updates};
+  }
 
   const response = await SIGNIN(userCreds);
   

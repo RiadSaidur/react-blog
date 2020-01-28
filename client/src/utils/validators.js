@@ -24,3 +24,5 @@ export const signInValidator =  creds => {
 
   return errors;
 }
+
+export const isEmpty = body => !body.trim().length

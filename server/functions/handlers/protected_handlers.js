@@ -33,7 +33,7 @@ const addNewPost = async (req, res) => {
 }
 
 const addNewComment = async (req, res) => {
-  if(!validateComment({ msg: req.body.msg })) return res.json({ error: 'invalid form data'} );
+  if(!validateComment({ msg: req.body.msg })) return res.status(400).json({ error: 'invalid form data'} );
 
   let id = req.params.id;
 
@@ -52,7 +52,7 @@ const addNewComment = async (req, res) => {
       id = doc.id;
     });
   } catch (error) {
-    return res.status(500).json({ error: 'something went wrong' });
+    return res.status(404).json({ error: 'something went wrong' });
   }
 
   try {
@@ -90,7 +90,7 @@ const updatePost = async (req, res) => {
 }
 
 const updateComment = async (req, res) => {
-  if(!validateComment({ msg: req.body.msg })) return res.json({ error: 'invalid form data'} );
+  if(!validateComment({ msg: req.body.msg })) return res.status(400).json({ error: 'invalid form data'} );
   
   const key = parseInt(req.params.key);
   let comments = [];
@@ -103,7 +103,7 @@ const updateComment = async (req, res) => {
       id = doc.id;
     });
   } catch (error) {
-    return res.status(500).json({ error: 'something went wrong' });
+    return res.status(404).json({ error: 'something went wrong' });
   }
   
   const idx = comments.findIndex(comment => {
@@ -118,7 +118,7 @@ const updateComment = async (req, res) => {
     await db.collection('comments').doc(id).update({ cmnts: comments });
     return res.status(201).json({ message: "comment successfully edited"});
   } catch (error) {
-    return res.status(500).json({ error: 'something went wrong svaing the comment' });
+    return res.status(500).json({ error: 'something went wrong saving the comment' });
   }
 }
 
@@ -154,7 +154,7 @@ const deleteComment = async (req, res) => {
       id = doc.id;
     });
   } catch (error) {
-    return res.status(500).json({ error: 'something went wrong' });
+    return res.status(404).json({ error: 'something went wrong' });
   }
 
   const idx = comments.findIndex(comment => {

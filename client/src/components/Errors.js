@@ -1,10 +1,6 @@
-import React, { useContext } from 'react'
+import React from 'react'
 
-import UserContext from '../store/userContext/UserContext'
-
-export default function Errors() {
-  const { clearError, user: { errors } } = useContext(UserContext);
-
+export default function Errors({errors, clearError}) {
   const removeError = (idx) => clearError(idx)
 
   return (

@@ -1,7 +1,11 @@
 import React from 'react'
 
 export default React.createContext({
-  commentCollection: [],
+  comments:{
+    commentCollection: [],
+    errors: []
+  },
+  clearError: idx => {},
   setComments: () => {},
   addNewComment: content => {},
   updateComment: content => {},

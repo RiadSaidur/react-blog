@@ -6,7 +6,7 @@ import Errors from '../components/Errors';
 function Signin({ history }){
   const [signStatus, setSignStatus] = useState(false);
 
-  const { signUp } = useContext(UserContext);
+  const { signUp, clearError, user: { errors } } = useContext(UserContext);
 
   const formHandler = async event => {
     event.preventDefault();
@@ -28,7 +28,7 @@ function Signin({ history }){
   return(
     <div className="sign-container nu-elevate-card contents">
       <h2>Sign Up</h2>
-      <Errors />
+      <Errors errors={errors} clearError={clearError} />
       <form onSubmit={formHandler} className="form">
       <input type="text" placeholder="user handle" className="nu-elevate-card"/>
         <input type="email" placeholder="Email" className="nu-elevate-card"/>
