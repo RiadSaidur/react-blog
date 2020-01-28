@@ -9,6 +9,7 @@ import {getSinglePost} from '../services/public'
 import '../stylesheets/Comments.css'
 
 import CommentContext from '../store/commentContext/CommentContext';
+import UserContext from '../store/userContext/UserContext'
 
 function Comments({ match }){
   const [isLoading, setIsLoading] = useState(true);
@@ -19,6 +20,7 @@ function Comments({ match }){
   const toggleBox = () => setNewComment(!newComment);
 
   const { comments: { commentCollection }, setComments } = useContext(CommentContext);
+  const { user: { userHandle } } = useContext(UserContext);
 
   const getComments = async () => {
     setIsLoading(true)
@@ -54,7 +56,9 @@ function Comments({ match }){
                 </Link>
                 <p>{comment.msg}</p>
                 <p>{comment.date}</p>
-                <Link to={`/edit/comment/${match.params.id}/${comment.key}`}><button>Edit</button></Link>
+                {userHandle === comment.author ?
+                  <Link to={`/edit/comment/${match.params.id}/${comment.key}`}><button>Edit</button></Link> : ''
+                }
               </div>
             ))
           }
