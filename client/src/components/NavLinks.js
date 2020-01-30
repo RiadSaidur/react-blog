@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import UserContext from '../store/userContext/UserContext'
 
-const NavLinks = () => {
+const NavLinks = ({ toggle }) => {
+  const { user: { isAuth }, signOut } = useContext(UserContext)
   return (
-    <div>
-      <ul className='nav-links'>
-        <Link to='/signin'><li>Sign In</li></Link>
-        <Link to='/signup'><li>Sign Up</li></Link>
+    <nav>
+      <ul className='nav_links' onClick={toggle}>
+        {!isAuth && <Link to='/signin'><li>Sign In</li></Link>}
+        {!isAuth && <Link to='/signup'><li>Sign Up</li></Link>}
+        {isAuth && <Link to='/' onClick={signOut}><li>Log Out</li></Link>}
         <Link to='/about'><li>About</li></Link>
       </ul>
-    </div>
+    </nav>
   )
 }
 

@@ -30,6 +30,10 @@
   z-index: 1;
 }
 
+.header img {
+  height: 20px;
+}
+
 .header div {
   width: 100%;
   display: flex;
