@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Salsa&display=swap');
+
 .sign-container {
   margin-top: 2rem;
   display: flex;
@@ -50,4 +52,107 @@
 .cta:active {
   transform: scale(.9);
   transition: all ease 1s;
+}
+
+/* all Signin styles */
+
+.signin_container {
+  background-color: #D2BDFF;
+}
+
+.signin_contents {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.signin_deco{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.signin_deco img {
+  position: relative;
+  top: 20px;
+  pointer-events: none;
+}
+
+.signin_deco h2 {
+  margin-right: 1rem;
+  text-align: right;
+  font-family: 'Salsa', cursive;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.signin_contents {
+  padding-top: 2rem;
+  background-color: white;
+}
+
+.signin_contents h3, p {
+  margin-bottom: .2rem;
+}
+
+.signin_form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signin_form input {
+  width: 320px;
+  padding: .6rem 1rem;
+  margin: .5rem 0 1rem 0;
+  border: none;
+  border-radius: 10px;
+  background-color: #F4F4F4;
+}
+
+.signin_cta {
+  background: #F86D70;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: white;
+  width: 100%;
+  border-radius: 10px;
+  padding: .6rem 1rem;
+}
+
+.signin_options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.signin_options a {
+  margin-bottom: .5rem;
+  color: #F86D70;
+}
+
+@media only screen and (min-width: 1080px) {
+  .signin_container {
+    display: flex;
+    flex-direction: row-reverse;
+    height: calc(100vh - 43px);
+  }
+
+  .signin_deco {
+    flex: 2;
+    flex-direction: column-reverse;
+  }
+
+  .signin_deco img {
+    width: 500px;
+    left: -30%;
+  }
+
+  .signin_contents {
+    flex: 10;
+    padding: 0;
+  }
 }

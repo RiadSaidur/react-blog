@@ -12,11 +12,6 @@ textarea{
   font-family: inherit;
 }
 
-body{
-  min-height: 100vh;
-  background-color: rgb(243, 243, 243);
-}
-
 button{
   cursor: pointer;
   background: none;
@@ -32,9 +27,16 @@ button:focus, input:focus, textarea:focus{
 }
 
 a{
-  color: black;
   text-decoration: none;
 }
+
+/* body {
+  height: 100vh;
+}
+
+#root {
+  height: 100%;
+} */
 
 .nu-elevate-card{
   box-shadow: 7px 7px 10px grey, -7px -7px 10px white;
@@ -58,9 +60,9 @@ a{
   border-radius: 10px;
 }
 
-@media only screen and (min-width: 720px){
+/* @media only screen and (min-width: 720px){
   body{
     width: 720px;
     margin: auto;
   }
-}
+} */

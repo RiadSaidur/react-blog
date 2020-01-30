@@ -25,27 +25,34 @@ function Signin({ history }){
   };
 
   return (
-    <div className="sign-container">
-      <div className="contents nu-elevate-card">
-        <h2>Sign In</h2>
+    <div className="signin_container">
+      <div className='signin_deco'>
+        <img src={require('../assets/signIn.svg')} alt=''/>
+        <h2>Enter the World of Joy</h2>
+      </div>
+
+      <div className="signin_contents">
+        <h3>WELCOME BACK</h3>
+        <p>Fun awaits for you</p>
         <Errors errors={errors} clearError={clearError} />
-        <div className="form">
+        <div className="signin_form">
           <form onSubmit={formHandler}>
-            <input type="email" placeholder="Email" className="nu-elevate-cta"/>
-            <input type="password" placeholder="Password" className="nu-elevate-cta"/>
-            <input
+            <label for='email'>Email</label>
+            <input id='email' type="email" />
+            <label for='password'>Password</label>
+            <input id='password' type="password" />
+            <button
               disabled={signStatus}
               type="submit"
-              value={signStatus ? 'Signin In ...' : 'Sign In'}
-              className="nu-elevate-cta cta"
-            />
+              className="signin_cta"
+            >{signStatus ? 'Signin In ...' : 'Sign In'}</button>
           </form>
-          <div className="sign-options">
-            <p>Forgot Password?</p>
-            <p>
-              Don't have an account? <Link to="/signup">Sign Up</Link>
-            </p>
-          </div>
+        </div>
+
+        <div className="signin_options">
+          <p>
+            Not a Member? <Link to="/signup">Sign Up</Link>
+          </p>
         </div>
       </div>
     </div>
