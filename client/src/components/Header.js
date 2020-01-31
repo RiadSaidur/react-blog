@@ -18,7 +18,7 @@ const Header = () => {
   return(
     <header className='header'>
       <div>
-        <button onClick={toggle}><img src={require('../assets/menu.png')} /></button>
+        <button onClick={toggle}><img src={require('../assets/menu.png')} alt='menu' /></button>
         <Link to='/'><h1>pixxelbook</h1></Link>
       </div>
       {showMenu && <NavLinks toggle={toggle}/>}

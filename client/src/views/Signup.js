@@ -26,22 +26,38 @@ function Signin({ history }){
   };
   
   return(
-    <div className="sign-container nu-elevate-card contents">
-      <h2>Sign Up</h2>
-      <Errors errors={errors} clearError={clearError} />
-      <form onSubmit={formHandler} className="form">
-      <input type="text" placeholder="user handle" className="nu-elevate-card"/>
-        <input type="email" placeholder="Email" className="nu-elevate-card"/>
-        <input type="password" placeholder="Password" className="nu-elevate-card"/>
-        <input type="password" placeholder="Repeat Password" className="nu-elevate-card"/>
-        <input 
-          disabled={signStatus}
-          type="submit" 
-          value={signStatus ? 'Signin Up ...' : 'Sign Up'}
-          className="nu-elevate-card cta"
-        />
-      </form>
-      <p className="sign-options">Alredy have an account? <Link to="/signin">Sign In</Link> instead!</p>
+    <div className="signin_container reverse">
+      <div className="signin_deco">
+        <img src={require('../assets/signUp.svg')} alt=""/>
+        <h2>Where fun meets creativity</h2>
+      </div>
+
+      <div className='signin_contents'>
+        <h3>WELCOME ABOARD</h3>
+        <p>We are happy to have you</p>
+
+        <Errors errors={errors} clearError={clearError} />
+
+        <form onSubmit={formHandler} className="signin_form">
+          <label htmlFor='user'>User Handle</label>
+          <input id='user' type="text" />
+          <label htmlFor="email">Email</label>
+          <input id='email' type="email" />
+          <label htmlFor="password">Password</label>
+          <input id='password' type="password" />
+          <label htmlFor="repeat">Repeat Password</label>
+          <input id='repeat' type="password" />
+          <button 
+            disabled={signStatus}
+            type="submit"
+            className="signin_cta"
+          >{signStatus ? 'Signin Up ...' : 'Sign Up'}</button>
+        </form>
+
+        <div className="signin_options">
+          <p>Alredy have an account? <Link to="/signin">Sign In</Link> instead!</p>
+        </div>
+      </div>
     </div>
   )
 }

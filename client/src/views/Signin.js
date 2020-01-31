@@ -34,12 +34,14 @@ function Signin({ history }){
       <div className="signin_contents">
         <h3>WELCOME BACK</h3>
         <p>Fun awaits for you</p>
+
         <Errors errors={errors} clearError={clearError} />
+
         <div className="signin_form">
           <form onSubmit={formHandler}>
-            <label for='email'>Email</label>
+            <label htmlFor='email'>Email</label>
             <input id='email' type="email" />
-            <label for='password'>Password</label>
+            <label htmlFor='password'>Password</label>
             <input id='password' type="password" />
             <button
               disabled={signStatus}
@@ -50,9 +52,7 @@ function Signin({ history }){
         </div>
 
         <div className="signin_options">
-          <p>
-            Not a Member? <Link to="/signup">Sign Up</Link>
-          </p>
+          <p>Not a Member? <Link to="/signup">Sign Up</Link></p>
         </div>
       </div>
     </div>
