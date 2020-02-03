@@ -14,7 +14,7 @@ const Posts = ({ posts, upvote, downvote }) => {
       {
         !posts.length ? <Loading /> :
         posts.map(post => (  
-          <div className="post nu-elevate-card" key={post.id}>
+          <div className="post" key={post.id}>
             <Link to={`/${post.author}`}>
               <p className="post-author">{post.author}</p>
             </Link>

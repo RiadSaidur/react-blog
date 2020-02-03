@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import UserContext from '../store/userContext/UserContext';
 import Errors from '../components/Errors';
 
+import signUpDeco from '../assets/signUp.svg'
+
+// require('../assets/signUp.svg')
+
 function Signin({ history }){
   const [signStatus, setSignStatus] = useState(false);
 
@@ -26,9 +30,9 @@ function Signin({ history }){
   };
   
   return(
-    <div className="signin_container reverse">
+    <div className="signin_container">
       <div className="signin_deco">
-        <img src={require('../assets/signUp.svg')} alt=""/>
+        <img src={signUpDeco} alt=""/>
         <h2>Where fun meets creativity</h2>
       </div>
 

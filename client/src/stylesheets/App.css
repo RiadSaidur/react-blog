@@ -1,3 +1,13 @@
+#root {
+  display: flex;
+  flex-direction: column-reverse;
+  min-height: 100vh;
+}
+
+.container {
+  flex: 1;
+}
+
 input:last-child{
   cursor: pointer;
 }
@@ -28,15 +38,8 @@ button:focus, input:focus, textarea:focus{
 
 a{
   text-decoration: none;
+  color: black;
 }
-
-/* body {
-  height: 100vh;
-}
-
-#root {
-  height: 100%;
-} */
 
 .nu-elevate-card{
   box-shadow: 7px 7px 10px grey, -7px -7px 10px white;
@@ -60,9 +63,8 @@ a{
   border-radius: 10px;
 }
 
-/* @media only screen and (min-width: 720px){
-  body{
-    width: 720px;
-    margin: auto;
+@media only screen and (min-width: 1080px){
+  #root {
+    flex-direction: row;
   }
-} */
+}

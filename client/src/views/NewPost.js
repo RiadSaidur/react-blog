@@ -4,6 +4,8 @@ import Errors from '../components/Errors'
 
 import PostContext from '../store/postContext/PostContext';
 
+import '../stylesheets/NewPost.css'
+
 function NewPost({ history }){
   const [postStatus, setPostStatus] = useState(false);
 
@@ -22,7 +24,7 @@ function NewPost({ history }){
     setPostStatus(false);
   };
   return(
-    <div className="nu-elevate-card sign-container contents">
+    <div className="addpost_container">
       <h2>Add New Post</h2>
       <Errors errors={errors} clearError={clearError} />
       <form onSubmit={newPost} className="form">
@@ -35,7 +37,7 @@ function NewPost({ history }){
           className="nu-elevate-cta cta"
         />
       </form>
-      <button className="sign-options cancel nu-elevate-cta" onClick={history.goBack}>Cancel</button>
+      <button className="sign-options cancel" onClick={history.goBack}>Cancel</button>
     </div>
   )
 }

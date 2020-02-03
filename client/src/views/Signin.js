@@ -5,6 +5,8 @@ import '../stylesheets/Signin.css'
 import UserContext from '../store/userContext/UserContext';
 import Errors from '../components/Errors';
 
+import signInDeco from '../assets/signIn.svg'
+
 function Signin({ history }){
   const [signStatus, setSignStatus] = useState(false)
 
@@ -27,7 +29,7 @@ function Signin({ history }){
   return (
     <div className="signin_container">
       <div className='signin_deco'>
-        <img src={require('../assets/signIn.svg')} alt=''/>
+        <img src={signInDeco} alt=''/>
         <h2>Enter the World of Joy</h2>
       </div>
 

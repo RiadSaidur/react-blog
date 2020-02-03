@@ -46,7 +46,7 @@ function EditComment({ match, history }){
   }
 
   return (
-    <div className="nu-elevate-card sign-container contents">
+    <div className="addpost_container">
       <h2>Update Comment</h2>
       <Errors errors={errors} clearError={clearError} /> 
       <form onSubmit={updateHandler} className="form">
@@ -62,7 +62,7 @@ function EditComment({ match, history }){
       disabled={isSaving}
       onClick={deleteComment} 
       className="cancel nu-elevate-cta">Delete Comment</button>
-      <button className="sign-options cancel nu-elevate-cta" onClick={history.goBack}>Cancel</button>
+      <button className="sign-options cancel" onClick={history.goBack}>Cancel</button>
     </div>
   )
 }

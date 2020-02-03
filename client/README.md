@@ -1,33 +1,33 @@
 # src folder Structure
 
-  src
-  |- assets
-  |- components
-  |- services
-  |- store
-  |- stylesheets
-  |- utils
-  |- views
+  src<br>
+  |- assets<br>
+  |- components<br>
+  |- services<br>
+  |- store<br>
+  |- stylesheets<br>
+  |- utils<br>
+  |- views<br>
 
 **all router views are listed in the views folder**
 
-  utils
-  |- validators
+  utils<br>
+  |- validators<br>
 
 **validator validates all form data**
 
-  services
-  |- api **creates dafault axios connection**
-  |- auth **controls Sign In/Sign Up and authorizing users**
-  |- protected **handles access to protected appi endpoints**
-  |- public **handles access to public api endpoints**
+  services<br>
+  |- api **creates dafault axios connection**<br>
+  |- auth **controls Sign In/Sign Up and authorizing users**<br>
+  |- protected **handles access to protected appi endpoints**<br>
+  |- public **handles access to public api endpoints**<br>
 
 **services is responsible for all api calls**
 
   store
-  |- userContext **stores all user states and errors**
-  |- postContext **stores all post states and errors**
-  |- commentContext **stores all comments states and errors**
+  |- userContext **stores all user states and errors**<br>
+  |- postContext **stores all post states and errors**<br>
+  |- commentContext **stores all comments states and errors**<br>
 
 **all shared data is handled via store and uses React Context API**
 
@@ -46,14 +46,14 @@ contains **signIn**, **signUp** and **addAuthHeader** methods
 
 ## protected
 
-contains **addPostToDB**, **updatePostToDB**, **deletePostFromDB**, **upvotePostOnDB**, **downvotePostOnDB**
+contains **addPostToDB**, **updatePostToDB**, **deletePostFromDB**, **upvotePostOnDB**, **downvotePostOnDB**<br>
          **addCommentToDB**, **updateCommentToDB**, **deleteCommentFromDB**
 
 these methods are only valid with an access token
 
 ## public
 
-contains **getAllPosts**, **getSinglePost**, **getFilteredPost**, **getUserPost**, **downvotePostOnDB**
+contains **getAllPosts**, **getSinglePost**, **getFilteredPost**, **getUserPost**, **downvotePostOnDB**<br>
          **getComments**
 
 these methods can be accessed without access token

@@ -8,7 +8,7 @@ const isEmail = email => {
 export const signUpValidator =  creds => {
   let errors = [];
 
-  if(!isEmail(creds.email)) errors.push('invalid Email');
+  if(!isEmail(creds.email)) errors.push('Invalid Email');
   if(creds.handle.length < 3) errors.push('User Handle must be at least 3 characters');
   if(creds.password.length < 8) errors.push('Password must be at least 8 characters');
   if(creds.password !== creds.confirmPassword) errors.push('Passwords must match');
@@ -19,7 +19,7 @@ export const signUpValidator =  creds => {
 export const signInValidator =  creds => {
   let errors = [];
 
-  if(!isEmail(creds.email)) errors.push('invalid Email');
+  if(!isEmail(creds.email)) errors.push('Invalid Email');
   if(creds.password.length < 8) errors.push('Password must be at least 8 characters');
 
   return errors;

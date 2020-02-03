@@ -37,10 +37,10 @@ function Comments({ match }){
   return (
     <div>
       {isLoading ? <Loading /> :
-        <div>
+        <div className='addpost_container'>
         {
           post.status>=200 && post.status<300 ? 
-          <div className="post nu-elevate-card">
+          <div className="post">
             <h2>{post.data.title}</h2>
             <p>{post.data.msg}</p>
           </div> : <p>{post.error}</p>
@@ -50,7 +50,7 @@ function Comments({ match }){
         <div className="comments">
           {
             commentCollection.cmnts.map(comment => (
-              <div className="comment post nu-elevate-card" key={comment.key}>
+              <div className="comment post" key={comment.key}>
                 <Link to={`/${comment.author}`}>
                   <h4>{comment.author}</h4>
                 </Link>

@@ -27,18 +27,20 @@ const App = () => {
         <CommentState>
           <Router>
             <Header />
-            <Switch>
-              <Route path='/' exact component={Home} />
-              <Route path='/signin' exact component={Signin} />
-              <Route path='/signup' exact component={Signup} />
-              <Route path='/about' exact component={About} />
-              <Route path='/:user' exact component={User} />
-              <ProtectedRoute path='/p/newpost' exact component={NewPost} />
-              <Route path='/p/:tag' exact component={TaggedPost} />
-              <Route path='/comments/:id' exact component={Comments} />
-              <ProtectedRoute path='/edit/post/:id/' exact component={EditPost} />
-              <ProtectedRoute path='/edit/comment/:id/:key' exact component={EditComment} />
-            </Switch>
+            <div className='container'>
+              <Switch>
+                <Route path='/' exact component={Home} />
+                <Route path='/signin' exact component={Signin} />
+                <Route path='/signup' exact component={Signup} />
+                <Route path='/about' exact component={About} />
+                <Route path='/:user' exact component={User} />
+                <ProtectedRoute path='/p/newpost' exact component={NewPost} />
+                <Route path='/p/:tag' exact component={TaggedPost} />
+                <Route path='/comments/:id' exact component={Comments} />
+                <ProtectedRoute path='/edit/post/:id/' exact component={EditPost} />
+                <ProtectedRoute path='/edit/comment/:id/:key' exact component={EditComment} />
+              </Switch>
+            </div>
           </Router>
         </CommentState>
       </PostState>

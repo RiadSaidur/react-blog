@@ -30,19 +30,25 @@ export default function EditPost({ match, history }) {
     post.title = event.target.elements[0].value;
     post.msg = event.target.elements[1].value;
     setIsSaving(true)
+    event.target.elements[2].value = 'Saving ...'
     await updatePost({ post, id: match.params.id, history })
+    event.target.elements[2].value = 'Save'
     setIsSaving(false)
   }
 
-  const deletePost = async () => {
+  const deletePost = async event => {
+    event.preventDefault();
+    event.persist();
     setIsSaving(true)
+    event.target.textContent = 'Deleting ...'
     await removePost(match.params.id)
+    event.target.textContent = 'Delete Post'
     setIsSaving(false)
     if(!errors.length) history.goBack()
   };
 
   return(
-    <div className="nu-elevate-card sign-container contents">
+    <div className="addpost_container">
       <h2>Update Post</h2>
       <Errors errors={errors} clearError={clearError} />
       <form onSubmit={updateHandler} className="form">
@@ -51,7 +57,7 @@ export default function EditPost({ match, history }) {
         <input
           disabled={isSaving}
           type="submit" 
-          value={isSaving? 'Saving...' : 'Save'} 
+          value='Save' 
           className="nu-elevate-cta cta"
         />
       </form>
@@ -59,7 +65,7 @@ export default function EditPost({ match, history }) {
       disabled={isSaving}
       onClick={deletePost} 
       className="cancel nu-elevate-cta">Delete Post</button>
-      <button className="sign-options cancel nu-elevate-cta" onClick={history.goBack}>Cancel</button>
+      <button className="sign-options cancel" onClick={history.goBack}>Cancel</button>
     </div>
   )
 }
