@@ -11,11 +11,14 @@ function About(){
       <div className="description">
         <p>This is a Demo Blogging WebApp based on React.</p>
         <p>To visit <a target="blank" href="https://github.com/deathcrush/react-blog.git">The GitHub Repository</a> for this Blog WebApp click <a target="blank" href="https://github.com/deathcrush/react-blog.git">here</a>.</p>
+        <p>All design was and assets were provided by <a href="https://github.com/voomoo">Rakibul Hasan</a>.</p>
         <div className="stack">
           <p>Library and Frameworks used in this WebApp:</p>
           <ul>
             <li>React</li>
             <li>React Router</li>
+            <li>Firebase Functions</li>
+            <li>Node.js</li>
           </ul>
         </div>
       </div>
